@@ -6,13 +6,13 @@
 
 (defn create-screen []
   (doto (seesaw/canvas :id :screen
-                   :background "#000000")
+                       :background "#000000")
     (.setIgnoreRepaint true)))
 
 (defn create-frame [screen]
   (doto (seesaw/frame :width 640
-                  :height 480
-                  :content screen)
+                      :height 480
+                      :content screen)
     (.setIgnoreRepaint true)))
 
 (defn init []
