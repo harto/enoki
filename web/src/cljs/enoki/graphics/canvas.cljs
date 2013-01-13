@@ -1,0 +1,22 @@
+;; An HTML5 <canvas>-based implementation
+
+(ns enoki.graphics.canvas
+  (:use [enoki.graphics :only [Context Display display-width display-height]]))
+
+(defrecord CanvasContext [display ctx]
+  Context
+  (clear! [this]
+    (.clearRect ctx 0 0 (display-width display) (display-height display))
+    this)
+  (draw-text! [this s x y]
+    (.fillText ctx s x y)
+    this))
+
+(defrecord CanvasDisplay [canvas]
+  Display
+  (display-width [_]
+    (.-width canvas))
+  (display-height [_]
+    (.-height canvas))
+  (context [this]
+    (->CanvasContext this (.getContext canvas "2d"))))

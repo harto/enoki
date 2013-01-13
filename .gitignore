@@ -1,0 +1,4 @@
+.lein-*
+.repl
+/*/target
+/*/generated
