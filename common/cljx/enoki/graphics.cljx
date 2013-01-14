@@ -2,10 +2,6 @@
 
 (ns enoki.graphics)
 
-(def ^:dynamic *display*
-  "Platform-specific implementation"
-  nil)
-
 (defprotocol Context
   (clear! [this]
     "Fill the display with the current background-colour. Returns `this'.")

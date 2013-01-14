@@ -1,8 +1,7 @@
 (ns game.swing.main
   (:require [seesaw.core :as seesaw]
-            [enoki.engine :as engine]
-            [enoki.graphics :as gfx]
-            [enoki.graphics.java2d :as gfx-impl]))
+            [enoki.main :as enoki]
+            [enoki.graphics.java2d :as gfx]))
 
 (defn create-screen []
   (doto (seesaw/canvas :id :screen
@@ -18,8 +17,8 @@
 (defn init []
   (let [screen (create-screen)]
     (seesaw/invoke-now (seesaw/show! (create-frame screen)))
-    (binding [gfx/*display* (gfx-impl/->JComponentDisplay screen)]
-      (engine/start))))
+    (enoki/start {:display (gfx/->JComponentDisplay screen)}
+                 {})))
 
 (defn -main [& args]
   (init))
