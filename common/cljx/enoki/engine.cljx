@@ -1,10 +1,10 @@
 ;; Core engine functionality
 
 ^:clj (ns enoki.engine
-         (:require [enoki.graphics :as g]
-                   [enoki.util.logging] ; required for dependency resolution
-                   [enoki.util.logging-macros :as log]
-                   ))
+        (:require [enoki.graphics :as g]
+                  [enoki.util.logging] ; required for dependency resolution
+                  [enoki.util.logging-macros :as log]
+                  ))
 
 ^:cljs (ns enoki.engine
          (:require [enoki.graphics :as g]
