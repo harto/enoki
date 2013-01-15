@@ -7,9 +7,9 @@
   :plugins [[com.keminglabs/cljx "0.2.0"]
             [lein-cljsbuild "0.2.7"]]
   :source-paths ["src/clj"
-                 "../common/clj"
+                 "../common/src/clj"
                  "generated"]
-  :cljx {:builds [{:source-paths ["../common/cljx"]
+  :cljx {:builds [{:source-paths ["../common/src/cljx"]
                    :output-path "generated"
                    :extension "cljs"
                    :include-meta true

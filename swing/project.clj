@@ -4,8 +4,8 @@
   :plugins [[com.keminglabs/cljx "0.2.0"]]
   :source-paths ["src"
                  "generated"
-                 "../common/clj"]
-  :cljx {:builds [{:source-paths ["../common/cljx"]
+                 "../common/src/clj"]
+  :cljx {:builds [{:source-paths ["../common/src/cljx"]
                    :output-path "generated"
                    :include-meta true
                    :rules cljx.rules/clj-rules}]}
