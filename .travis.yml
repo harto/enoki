@@ -1,5 +1,7 @@
 language: clojure
-script: script/cibuild
+# Yeah, these need to go into separate repos :-/
+install: (cd web; lein deps) && (cd swing; lein deps)
+script: (cd web; lein cibuild) && (cd swing; lein cibuild)
 lein: lein2
 jdk:
   - oraclejdk7

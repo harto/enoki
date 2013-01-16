@@ -1,3 +1,0 @@
-#!/bin/sh
-# These belong in separate repos, but that would be a total pain to hack on
-(cd web; lein cibuild) && (cd swing; lein cibuild)
