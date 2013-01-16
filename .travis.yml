@@ -1,0 +1,6 @@
+language: clojure
+script: script/cibuild
+lein: lein2
+jdk:
+  - oraclejdk7
+  - openjdk7
