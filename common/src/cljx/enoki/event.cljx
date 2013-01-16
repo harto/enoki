@@ -6,10 +6,15 @@
   "Map of event types to subscribers (functions)"
   (atom {}))
 
-(defn subscribe! [type handler]
+(defn subscribe!
+  "Register `handler' for events of `type'. Event handlers should accept state
+   and an event-specific number of arguments and must return an updated state."
+  [type handler]
   (swap! subscribers update-in [type] conj handler))
 
-(defn broadcast [state type & args]
+(defn broadcast
+  "Broadcast an event identified by `type' to all subscribers."
+  [state type & args]
   (reduce (fn [state handler] (apply handler state args))
           state
           (@subscribers type)))
