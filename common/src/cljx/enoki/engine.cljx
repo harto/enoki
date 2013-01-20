@@ -17,8 +17,12 @@
       (g/clear!)
       (g/draw-text! "Hello, world" 10 20)))
 
-(defn tick [{:keys [state display]}]
-  (g/render display #(render % state)))
+(defn update [state]
+  state)
+
+(defn tick [{:keys [state display] :as env}]
+  (g/render display (fn [ctx] (render ctx state)))
+  (assoc-in env [:state] (update state)))
 
 (defn start
   "Enters the game loop. This function might return immediately or once the game

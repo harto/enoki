@@ -3,6 +3,10 @@
 (ns enoki.graphics)
 
 (defprotocol Context
+  ;; (bg! [this colour]
+  ;;   "Set background colour")
+  ;; (fg! [this colour]
+  ;;   "Set foreground colour")
   (clear! [this]
     "Fill the display with the current background-colour. Returns `this'.")
   (draw-text! [this s x y]
