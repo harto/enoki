@@ -1,9 +1,8 @@
 (ns enoki.engine-impl)
 
 (defn loop-forever
-  "A naïve game loop implementation that sleeps for 1 millisecond between
-   calls to `tick'."
+  "A naïve game loop implementation that calls `tick' as often as possible."
   [tick env]
   (loop [env env]
-    (Thread/sleep 1)
+    (Thread/yield)
     (recur (tick env))))
