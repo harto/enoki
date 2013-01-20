@@ -15,7 +15,7 @@
 
 (defn broadcast
   "Broadcast an event identified by `type' to all subscribers."
-  [state type & args]
-  (reduce (fn [state handler] (apply handler state type args))
+  [type state & args]
+  (reduce (fn [state handler] (apply handler type state args))
           state
           (@subscribers type)))
