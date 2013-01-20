@@ -3,19 +3,10 @@
 ;; Penumbra (https://github.com/ztellman/penumbra)
 
 (ns enoki.graphics.java2d
-  (:require [seesaw.core :as seesaw])
-  (:use [enoki.graphics]))
-
-(defn create-canvas []
-  (doto (seesaw/canvas :id :canvas
-                       :background "#000000")
-    (.setIgnoreRepaint true)))
-
-(defn create-frame [screen]
-  (doto (seesaw/frame :width 640
-                      :height 480
-                      :content screen)
-    (.setIgnoreRepaint true)))
+  (:require [seesaw.core :as seesaw]
+            [enoki.event :as event])
+  (:use [enoki.graphics])
+  (:import [java.awt Canvas Color Dimension]))
 
 (defrecord Graphics2DContext [display g]
   Context
@@ -26,20 +17,38 @@
     (.drawString g s x y)
     this))
 
-(defrecord JComponentDisplay [panel]
+(defrecord CanvasDisplay [frame canvas]
   Display
   (init-display! [_]
-    )
+    (seesaw/invoke-now
+     (seesaw/pack! frame)
+     (seesaw/show! frame))
+    (.createBufferStrategy canvas 2)
+    (printf "width=%d, height=%d%n" (.getWidth canvas) (.getHeight canvas)))
   (display-width [_]
-    (.getWidth panel))
+    (.getWidth canvas))
   (display-height [_]
-    (.getHeight panel))
+    (.getHeight canvas))
   (render [this f]
-    (->> (.getGraphics panel)
-         (->Graphics2DContext this)
-         (f))))
+    (let [bs (.getBufferStrategy canvas)
+          g (.getDrawGraphics bs)]
+      (f (->Graphics2DContext this g))
+      (.show bs)
+      (.dispose g))))
+
+;; It seems bad and wrong to use an AWT Canvas within a Swing JFrame, but I
+;; couldn't find a more reliable way to get double-buffering working.
+(defn- create-canvas []
+  (doto (Canvas.)
+    (.setSize 640 480)
+    (.setIgnoreRepaint true)))
+
+(defn- create-frame [canvas]
+  (doto (seesaw/frame :resizable? false)
+    (.add canvas)
+    (.setIgnoreRepaint true)))
 
 (defn create-display []
-  (let [canvas (create-canvas)]
-    (seesaw/invoke-now (seesaw/show! (create-frame canvas)))
-    (->JComponentDisplay canvas)))
+  (let [canvas (create-canvas)
+        frame (create-frame canvas)]
+    (->CanvasDisplay frame canvas)))
