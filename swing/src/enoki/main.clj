@@ -6,5 +6,5 @@
 
 (defn start
   "Engine entry point"
-  [env initial-state]
-  (engine/start (assoc env :loop-fn impl/loop-forever) initial-state))
+  [env]
+  (engine/start (assoc env :loop-fn impl/loop-forever)))

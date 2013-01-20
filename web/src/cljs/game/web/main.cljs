@@ -4,5 +4,5 @@
             [enoki.util.dom :as dom]))
 
 (defn ^:export init []
-  (enoki/start {:display (gfx/->CanvasDisplay (dom/get-element "screen"))}
-               {}))
+  (enoki/start {:display (gfx/->CanvasDisplay (dom/get-element "screen"))
+                :state {}}))

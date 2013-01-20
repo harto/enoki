@@ -17,8 +17,8 @@
 (defn init []
   (let [screen (create-screen)]
     (seesaw/invoke-now (seesaw/show! (create-frame screen)))
-    (enoki/start {:display (gfx/->JComponentDisplay screen)}
-                 {})))
+    (enoki/start {:display (gfx/->JComponentDisplay screen)
+                  :state {}})))
 
 (defn -main [& args]
   (init))

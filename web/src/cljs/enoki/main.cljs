@@ -8,8 +8,8 @@
 
 (defn start
   "Engine entry point"
-  [env initial-state]
+  [env]
   (repl/connect "http://localhost:9000/repl")
   (logging/init!)
   (logging/set-level! :info)
-  (engine/start (assoc env :loop-fn impl/loop-forever) initial-state))
+  (engine/start (assoc env :loop-fn impl/loop-forever)))
