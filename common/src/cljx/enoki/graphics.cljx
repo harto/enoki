@@ -13,5 +13,5 @@
     "Return the display width in pixels")
   (display-height [this]
     "Return the display height in pixels")
-  (context [this]
-    "Initialise and return a Context"))
+  (render [this ctx]
+    "Draws to the display using a function (fn [g])"))

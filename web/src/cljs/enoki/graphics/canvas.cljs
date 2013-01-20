@@ -18,5 +18,7 @@
     (.-width canvas))
   (display-height [_]
     (.-height canvas))
-  (context [this]
-    (->CanvasContext this (.getContext canvas "2d"))))
+  (render [this f]
+    (->> (.getContext canvas "2d")
+         (->CanvasContext this)
+         (f))))

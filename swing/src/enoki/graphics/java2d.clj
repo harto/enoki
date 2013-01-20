@@ -20,6 +20,7 @@
     (.getWidth panel))
   (display-height [_]
     (.getHeight panel))
-  (context [this]
-    (->Graphics2DContext this (.getGraphics panel))))
-
+  (render [this f]
+    (->> (.getGraphics panel)
+         (->Graphics2DContext this)
+         (f))))
