@@ -6,8 +6,8 @@
   (:require [seesaw.core :as seesaw])
   (:use [enoki.graphics]))
 
-(defn create-screen []
-  (doto (seesaw/canvas :id :screen
+(defn create-canvas []
+  (doto (seesaw/canvas :id :canvas
                        :background "#000000")
     (.setIgnoreRepaint true)))
 
@@ -38,6 +38,6 @@
          (f))))
 
 (defn create-display []
-  (let [screen (create-screen)]
-    (seesaw/invoke-now (seesaw/show! (create-frame screen)))
-    (->JComponentDisplay screen)))
+  (let [canvas (create-canvas)]
+    (seesaw/invoke-now (seesaw/show! (create-frame canvas)))
+    (->JComponentDisplay canvas)))
