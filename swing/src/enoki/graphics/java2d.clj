@@ -3,7 +3,19 @@
 ;; Penumbra (https://github.com/ztellman/penumbra)
 
 (ns enoki.graphics.java2d
+  (:require [seesaw.core :as seesaw])
   (:use [enoki.graphics]))
+
+(defn create-screen []
+  (doto (seesaw/canvas :id :screen
+                       :background "#000000")
+    (.setIgnoreRepaint true)))
+
+(defn create-frame [screen]
+  (doto (seesaw/frame :width 640
+                      :height 480
+                      :content screen)
+    (.setIgnoreRepaint true)))
 
 (defrecord Graphics2DContext [display ctx]
   Context
@@ -24,3 +36,8 @@
     (->> (.getGraphics panel)
          (->Graphics2DContext this)
          (f))))
+
+(defn create-display []
+  (let [screen (create-screen)]
+    (seesaw/invoke-now (seesaw/show! (create-frame screen)))
+    (->JComponentDisplay screen)))
