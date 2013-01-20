@@ -17,13 +17,13 @@
                       :content screen)
     (.setIgnoreRepaint true)))
 
-(defrecord Graphics2DContext [display ctx]
+(defrecord Graphics2DContext [display g]
   Context
   (clear! [this]
-    (.clearRect ctx 0 0 (display-width display) (display-height display))
+    (.clearRect g 0 0 (display-width display) (display-height display))
     this)
   (draw-text! [this s x y]
-    (.drawString ctx s x y)
+    (.drawString g s x y)
     this))
 
 (defrecord JComponentDisplay [panel]
