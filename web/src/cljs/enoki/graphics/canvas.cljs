@@ -14,6 +14,9 @@
 
 (defrecord CanvasDisplay [canvas]
   Display
+  (init-display! [_]
+    ;; Nothing to do here
+    )
   (display-width [_]
     (.-width canvas))
   (display-height [_]

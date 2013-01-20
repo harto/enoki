@@ -9,6 +9,8 @@
     "Draw string `s' at location [x, y]"))
 
 (defprotocol Display
+  (init-display! [this]
+    "Do any required initialisation, e.g. make frame visible")
   (display-width [this]
     "Return the display width in pixels")
   (display-height [this]

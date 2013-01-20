@@ -24,6 +24,7 @@
   "Enters the game loop. This function might return immediately or once the game
    loop is exited, depending on the implementation of loop-fn."
   [env]
+  (g/init-display! (:display env))
   (log/info "Entering game loop")
   (let [loop-forever (:loop-fn env)]
     (loop-forever tick env)))

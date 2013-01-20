@@ -28,6 +28,8 @@
 
 (defrecord JComponentDisplay [panel]
   Display
+  (init-display! [_]
+    )
   (display-width [_]
     (.getWidth panel))
   (display-height [_]
