@@ -1,4 +1,4 @@
-;; An HTML5 <canvas>-based implementation
+;; An HTML5 `<canvas>`-based graphics implementation.
 
 (ns enoki.graphics.canvas
   (:use [enoki.graphics :only [Context Display display-width display-height]]))

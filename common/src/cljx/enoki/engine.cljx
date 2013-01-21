@@ -1,4 +1,4 @@
-;; Core engine functionality
+;; Core engine functionality.
 
 ^:clj (ns enoki.engine
         (:require [enoki.event :as e]
@@ -22,16 +22,24 @@
   (g/render display (fn [ctx] (e/broadcast :render state ctx)))
   (assoc-in env [:state] (update state)))
 
-;; Environment-specific loop functions
+;; ## Game loop
+;;
+;; We need to yield control of the CPU every tick to allow IO events to be
+;; generated, to play nice with other processes, etc. On the JVM we can just
+;; put the running thread to sleep momentarily. The JavaScript equivalent is to
+;; set a timeout that calls the next tick a moment into the future.
 
 (defn ^:clj loop-forever
-  "A naïve game loop implementation that calls `tick' as often as possible."
+  "A naïve game loop implementation that repeatedly calls `tick', yielding
+   for 1ms between calls."
   [tick env]
   (loop [env env]
     (Thread/sleep 1)
     (recur (tick env))))
 
 (defn ^:cljs loop-forever [tick env]
+  "A naïve game loop implementation that repeatedly calls `tick', yielding
+   for 1 ms between calls."
   (timer/callOnce #(loop-forever tick (tick env)) 1))
 
 (defn start
