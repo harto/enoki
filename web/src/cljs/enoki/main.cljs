@@ -3,7 +3,6 @@
 (ns enoki.main
   (:require [clojure.browser.repl :as repl]
             [enoki.engine :as engine]
-            [enoki.engine-impl :as impl]
             [enoki.util.logging :as logging]))
 
 (defn start
@@ -12,4 +11,4 @@
   (repl/connect "http://localhost:9000/repl")
   (logging/init!)
   (logging/set-level! :info)
-  (engine/start (assoc env :loop-fn impl/loop-forever)))
+  (engine/start env))
