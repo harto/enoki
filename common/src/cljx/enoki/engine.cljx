@@ -1,28 +1,25 @@
 ;; Core engine functionality
 
 ^:clj (ns enoki.engine
-        (:require [enoki.graphics :as g]
+        (:require [enoki.event :as e]
+                  [enoki.graphics :as g]
                   [enoki.util.logging] ; required for dependency resolution
                   [enoki.util.logging-macros :as log]
                   ))
 
 ^:cljs (ns enoki.engine
          (:require [goog.Timer :as timer]
+                   [enoki.event :as e]
                    [enoki.graphics :as g]
                    [enoki.util.logging] ; required for dependency resolution
                    )
          (:require-macros [enoki.util.logging-macros :as log]))
 
-(defn render [ctx state]
-  (-> ctx
-      (g/clear!)
-      (g/draw-text! "Hello, world" 10 20)))
-
 (defn update [state]
   state)
 
 (defn tick [{:keys [state display] :as env}]
-  (g/render display (fn [ctx] (render ctx state)))
+  (g/render display (fn [ctx] (e/broadcast :render state ctx)))
   (assoc-in env [:state] (update state)))
 
 ;; Environment-specific loop functions
