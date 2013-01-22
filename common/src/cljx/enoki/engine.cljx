@@ -33,9 +33,13 @@
   "A naïve game loop implementation that repeatedly calls `tick', yielding
    for 1ms between calls."
   [tick env]
-  (loop [env env]
-    (Thread/sleep 1)
-    (recur (tick env))))
+  ;; We start a new thread to aid interactive development. This returns control
+  ;; to the REPL immediately.
+  (-> #(loop [env env]
+         (Thread/sleep 1)
+         (recur (tick env)))
+      (Thread.)
+      (.start)))
 
 (defn ^:cljs loop-forever [tick env]
   "A naïve game loop implementation that repeatedly calls `tick', yielding
