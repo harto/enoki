@@ -16,7 +16,7 @@
          (:require-macros [enoki.util.logging-macros :as log]))
 
 (defn update [state]
-  (e/broadcast :update state))
+  (e/broadcast :update (assoc-in state [:ticks] (inc (:ticks state 0)))))
 
 (defn tick [{:keys [state display] :as env}]
   (g/render display (fn [ctx] (e/broadcast :render state ctx)))
