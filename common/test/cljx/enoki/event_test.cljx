@@ -10,4 +10,4 @@
 (deftest test-multiple-subscribers
   (subscribe! :foo (fn [type state & args] (update-in state [type] conj :baz)))
   (subscribe! :foo (fn [type state & args] (update-in state [type] conj :bar)))
-  (is (= {:foo '(:baz :bar)} (broadcast {} :foo))))
+  (is (= {:foo '(:baz :bar)} (broadcast :foo {}))))
