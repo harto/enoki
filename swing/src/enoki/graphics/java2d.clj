@@ -16,7 +16,7 @@
     (.clearRect g 0 0 (display-width display) (display-height display))
     this)
   (draw-text! [this s x y]
-    (.drawString g s x y)
+    (.drawString g (str s) x y)
     this))
 
 (defrecord CanvasDisplay [frame canvas]
