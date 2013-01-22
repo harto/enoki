@@ -4,7 +4,9 @@
 
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
-            [enoki.event :as event])
+            [enoki.event :as event]
+            [enoki.util.logging]
+            [enoki.util.logging-macros :as log])
   (:use [enoki.graphics])
   (:import [java.awt Canvas Color Dimension]))
 
@@ -32,9 +34,13 @@
   (render [this f]
     (let [bs (.getBufferStrategy canvas)
           g (.getDrawGraphics bs)]
-      (f (->Graphics2DContext this g))
-      (.show bs)
-      (.dispose g))))
+      (try
+        (f (->Graphics2DContext this g))
+        (catch Exception e
+          (log/error (.getMessage e)))
+        (finally
+         (.show bs)
+         (.dispose g))))))
 
 ;; It seems bad and wrong to use an AWT Canvas within a Swing JFrame, but I
 ;; couldn't find a more reliable way to get double-buffering working.
