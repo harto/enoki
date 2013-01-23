@@ -1,4 +1,4 @@
-;; -*-clojure-*-
+;; vim:syntax=clojure filetype=clojure
 
 ;; A simple eventing mechanism for subscribing to and generating events.
 ;;
