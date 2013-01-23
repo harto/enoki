@@ -12,26 +12,34 @@
   (:import [java.awt Canvas Color Dimension]))
 
 (defrecord Graphics2DContext [display g]
+
   Context
+
   (clear! [this]
     (.clearRect g 0 0 (display-width display) (display-height display))
     this)
+
   (draw-text! [this s x y]
     (.drawString g (str s) x y)
     this))
 
 (defrecord CanvasDisplay [frame canvas]
+
   Display
+
   (init-display! [_]
     (seesaw/invoke-now
      (seesaw/pack! frame)
      (seesaw/show! frame))
     (.createBufferStrategy canvas 2)
     (printf "width=%d, height=%d%n" (.getWidth canvas) (.getHeight canvas)))
+
   (display-width [_]
     (.getWidth canvas))
+
   (display-height [_]
     (.getHeight canvas))
+
   (render [this f]
     (let [bs (.getBufferStrategy canvas)
           g (.getDrawGraphics bs)]
