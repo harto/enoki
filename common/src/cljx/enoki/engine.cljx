@@ -18,8 +18,18 @@
 (defn update [state]
   (e/broadcast :update (assoc-in state [:ticks] (inc (:ticks state 0)))))
 
+(defn render
+  "Trigger a render of the current game state on a given display. Handler
+   functions registered for the `:render` event are called with the state
+   and a graphics context (`enoki.graphics.Context`).
+
+   It's usually only useful to register a single handler for `:render`, as
+   handlers are invoked in an unspecified order."
+  [state display]
+  (g/render display (fn [ctx] (e/broadcast :render state ctx))))
+
 (defn tick [{:keys [state display] :as env}]
-  (g/render display (fn [ctx] (e/broadcast :render state ctx)))
+  (render state display)
   (assoc-in env [:state] (update state)))
 
 ;; ## Game loop
