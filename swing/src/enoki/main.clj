@@ -3,7 +3,5 @@
 (ns enoki.main
   (:require [enoki.engine :as engine]))
 
-(defn start
-  "Engine entry point"
-  [env]
+(defn start [env]
   (engine/start env))

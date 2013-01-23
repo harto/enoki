@@ -1,6 +1,7 @@
-;; A Java2D implementation of the graphics engine
-;; This will probably be replaced with something like
-;; Penumbra (https://github.com/ztellman/penumbra)
+;; A Java2D implementation of the graphics engine.
+;;
+;; This may eventually be replaced with something like
+;; [Penumbra](https://github.com/ztellman/penumbra).
 
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
