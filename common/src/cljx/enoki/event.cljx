@@ -1,3 +1,5 @@
+;; -*- mode: clojure; -*-
+
 ;; A simple eventing mechanism for subscribing to and generating events.
 ;;
 ;; Event types are identified by keywords. Registered handlers are functions
