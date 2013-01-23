@@ -15,7 +15,11 @@
                    )
          (:require-macros [enoki.util.logging-macros :as log]))
 
-(defn update [state]
+(defn update
+  "Trigger an update of the game state. All handler functions registered for
+   the `:update` event are called with the current game state, and each must
+   return an updated state."
+  [state]
   (e/broadcast :update (assoc-in state [:ticks] (inc (:ticks state 0)))))
 
 (defn render
