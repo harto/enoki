@@ -46,7 +46,7 @@
 (defn ^:clj loop-forever
   "A naïve game loop implementation that repeatedly calls `tick', yielding
    for 1ms between calls."
-  [tick env]
+  [env]
   ;; We start a new thread to aid interactive development. This returns control
   ;; to the REPL immediately.
   (-> #(loop [env env]
@@ -55,10 +55,10 @@
       (Thread.)
       (.start)))
 
-(defn ^:cljs loop-forever [tick env]
+(defn ^:cljs loop-forever [env]
   "A naïve game loop implementation that repeatedly calls `tick', yielding
    for 1 ms between calls."
-  (timer/callOnce #(loop-forever tick (tick env)) 1))
+  (timer/callOnce #(loop-forever (tick env)) 1))
 
 (defn start
   "Enters the game loop. This function might return immediately or once the game
@@ -66,4 +66,4 @@
   [env]
   (g/init-display! (:display env))
   (log/info "Entering game loop")
-  (loop-forever tick env))
+  (loop-forever env))
