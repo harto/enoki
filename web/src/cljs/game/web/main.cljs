@@ -1,8 +1,8 @@
 (ns game.web.main
   (:require [game.main :as game]
-            [enoki.graphics.canvas :as gfx]
-            [enoki.util.dom :as dom]))
+            [enoki.util.dom :as dom]
+            [enoki.web :as web]))
 
 (defn ^:export init []
-  (game/start {:display (gfx/->CanvasDisplay (dom/get-element "screen"))
-               :state {}}))
+  (web/init!)
+  (game/start (web/env (dom/get-element "screen"))))

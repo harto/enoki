@@ -1,10 +1,9 @@
 (ns game.swing.main
-  (:require [game.main :as game]
-            [enoki.graphics.java2d :as gfx]))
+  (:require [enoki.swing :as swing]
+            [game.main :as game]))
 
 (defn init []
-  (game/start {:display (gfx/create-display)
-               :state {}}))
+  (game/start (swing/env)))
 
 (defn -main [& args]
   (init))
