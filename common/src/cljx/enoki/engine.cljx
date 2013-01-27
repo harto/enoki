@@ -21,7 +21,7 @@
    return an updated state."
   [state]
   (-> state
-      (assoc-in [:ticks] (inc (:ticks state 0)))
+      (update-in [:ticks] inc)
       (e/broadcast :update)))
 
 (defn render
@@ -68,4 +68,4 @@
   [env]
   (g/init-display! (:display env))
   (log/info "Entering game loop")
-  (loop-forever env))
+  (loop-forever (assoc-in env [:state :ticks] 0)))
