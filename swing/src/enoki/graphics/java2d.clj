@@ -58,12 +58,7 @@
     (.setSize 640 480)
     (.setIgnoreRepaint true)))
 
-(defn- create-frame [canvas]
-  (doto (seesaw/frame :resizable? false)
-    (.add canvas)
-    (.setIgnoreRepaint true)))
-
-(defn create-display []
-  (let [canvas (create-canvas)
-        frame (create-frame canvas)]
+(defn create-display [frame]
+  (let [canvas (create-canvas)]
+    (.add frame canvas)
     (->CanvasDisplay frame canvas)))
