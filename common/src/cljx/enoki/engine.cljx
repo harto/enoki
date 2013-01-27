@@ -20,7 +20,9 @@
    the `:update` event are called with the current game state, and each must
    return an updated state."
   [state]
-  (e/broadcast :update (assoc-in state [:ticks] (inc (:ticks state 0)))))
+  (-> state
+      (assoc-in [:ticks] (inc (:ticks state 0)))
+      (e/broadcast :update)))
 
 (defn render
   "Trigger a render of the current game state on a given display. Handler
@@ -30,7 +32,7 @@
    It's usually only useful to register a single handler for `:render`, as
    handlers are invoked in an unspecified order."
   [state display]
-  (g/render display (fn [ctx] (e/broadcast :render state ctx))))
+  (g/render display (fn [ctx] (e/broadcast state :render ctx))))
 
 (defn tick [{:keys [state display] :as env}]
   (render state display)

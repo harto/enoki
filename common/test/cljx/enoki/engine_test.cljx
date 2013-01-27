@@ -17,4 +17,4 @@
         renderer (fn [& args] (reset! renderer-args args))]
     (e/subscribe! :render renderer)
     (render state (->DummyDisplay))
-    (is (= [:render state :dummy-context] @renderer-args))))
+    (is (= [state :render :dummy-context] @renderer-args))))

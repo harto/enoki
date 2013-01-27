@@ -12,5 +12,5 @@
   {})
 
 (defn start [env]
-  (e/subscribe! :render (fn [_ state ctx] (render state ctx)))
+  (e/subscribe! :render (fn [state _ ctx] (render state ctx)))
   (enoki/start (assoc env :state (initial-state))))
