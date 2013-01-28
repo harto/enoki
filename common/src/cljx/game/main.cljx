@@ -1,12 +1,20 @@
 (ns game.main
-  (:require [enoki.engine :as enoki]
+  (:require [clojure.string :as str]
+            [enoki.engine :as enoki]
             [enoki.event :as e]
             [enoki.graphics :as g]))
+
+(defn print-ticks [ctx ticks]
+  (g/draw-text! ctx ticks 10 20))
+
+(defn print-pressed-keys [ctx keys]
+  (g/draw-text! ctx (str/join ", " keys) 10 40))
 
 (defn render [state ctx]
   (-> ctx
       (g/clear!)
-      (g/draw-text! (:ticks state) 10 20)))
+      (print-ticks (:ticks state))
+      (print-pressed-keys (:pressed-keys state))))
 
 (defn initial-state []
   {})

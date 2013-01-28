@@ -30,6 +30,7 @@
   [state]
   (-> state
       (update-in [:ticks] inc)
+      (assoc-in [:pressed-keys] @kbd/pressing)
       (fire-key-events (kbd/consume-events!))
       (e/broadcast :update)))
 
