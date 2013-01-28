@@ -3,6 +3,7 @@
 ^:clj (ns enoki.engine
         (:require [enoki.event :as e]
                   [enoki.graphics :as g]
+                  [enoki.keyboard :as kbd]
                   [enoki.util.logging] ; required for dependency resolution
                   [enoki.util.logging-macros :as log]
                   ))
@@ -11,9 +12,16 @@
          (:require [goog.Timer :as timer]
                    [enoki.event :as e]
                    [enoki.graphics :as g]
+                   [enoki.keyboard :as kbd]
                    [enoki.util.logging] ; required for dependency resolution
                    )
          (:require-macros [enoki.util.logging-macros :as log]))
+
+(defn fire-key-events [state events]
+  (reduce (fn [state [event-type key]]
+            (e/broadcast state event-type key))
+          state
+          events))
 
 (defn update
   "Trigger an update of the game state. All handler functions registered for
@@ -22,6 +30,7 @@
   [state]
   (-> state
       (update-in [:ticks] inc)
+      (fire-key-events (kbd/consume-events!))
       (e/broadcast :update)))
 
 (defn render

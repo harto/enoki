@@ -4,6 +4,19 @@
   (:require [enoki.event :as e]
             [enoki.graphics :as g]))
 
+(deftest test-fire-key-events
+  (testing "handlers return updated state"
+    (e/subscribe! :key-pressed (fn [state type key]
+                                 (update-in state [:keys-pressed] conj key)))
+    (e/subscribe! :key-released (fn [state type key]
+                                  (update-in state [:keys-released] conj key)))
+    (let [initial-state {:keys-pressed #{}
+                         :keys-released #{}}
+          events [[:key-pressed :a] [:key-pressed :b] [:key-released :b] [:key-released :a]]
+          updated-state (fire-key-events initial-state events)]
+      (is (= #{:a :b} (:keys-pressed updated-state)))
+      (is (= #{:a :b} (:keys-released updated-state))))))
+
 (defrecord DummyDisplay []
   g/Display
   (g/init-display! [_])
