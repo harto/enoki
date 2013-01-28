@@ -3,7 +3,7 @@
 (def event-queue
   "Stores key events as they occur. The main loop broadcasts all events in this
    queue each tick, then resets the queue for the next tick. It's up to
-   implementations to capture key events and enter them into the queue."
+   implementations to capture key events and enter them into this queue."
   (atom []))
 
 (def pressing
@@ -13,8 +13,8 @@
   (atom #{}))
 
 (defn enqueue-event!
-  "Record a key event for later consumption, where both `type` and `key` are
-   keywords."
+  "Record a key event for later consumption, where both `event-type` and `key`
+   are keywords."
   [event-type key]
   {:pre [(event-type #{:key-pressed :key-released})]}
   (swap! event-queue conj [event-type key])
