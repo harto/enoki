@@ -12,11 +12,6 @@
    between ticks."
   (atom #{}))
 
-(defn pressing?
-  "Check if a key or combination of keys is currently pressed."
-  [& keys]
-  (every? @pressing keys))
-
 (defn enqueue-event!
   "Record a key event for later consumption, where both `type` and `key` are
    keywords."
