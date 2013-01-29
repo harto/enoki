@@ -1,3 +1,6 @@
+;; A web-specific logging implementation that defers to the GClosure logging
+;; subsystem.
+
 (ns enoki.logging
   (:require [goog.debug.Console]
             [goog.debug.Logger.Level :as Level]
@@ -13,8 +16,8 @@
 (defn root-logger []
   (LogManager/getRoot))
 
-(defn get-logger [name]
-  (LogManager/getLogger name))
+(defn get-logger [logger-name]
+  (LogManager/getLogger logger-name))
 
 (defn set-level!
   ([level]
