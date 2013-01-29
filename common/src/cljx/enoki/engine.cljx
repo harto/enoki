@@ -28,11 +28,12 @@
    the `:update` event are called with the current game state, and each must
    return an updated state."
   [state]
-  (-> state
-      (update-in [:ticks] inc)
-      (assoc-in [:pressed-keys] @kbd/pressing)
-      (fire-key-events (kbd/consume-events!))
-      (e/broadcast :update)))
+  (let [key-events (kbd/consume-events!)]
+    (-> state
+        (update-in [:pressed-keys] kbd/currently-pressed-keys key-events)
+        (fire-key-events key-events)
+        (e/broadcast :update)
+        (update-in [:ticks] inc))))
 
 (defn render
   "Trigger a render of the current game state on a given display. Handler
