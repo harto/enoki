@@ -1,6 +1,6 @@
 (ns game.web.main
-  (:require [game.main :as game]
-            [enoki.util.dom :as dom]
+  (:require [clojure.browser.dom :as dom]
+            [game.main :as game]
             [enoki.web :as web]))
 
 (defn ^:export init []
