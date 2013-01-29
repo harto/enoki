@@ -58,10 +58,16 @@
 
 (defn enqueue-event!
   "Record a key event for later consumption, where both `event-type` and `key`
-   are keywords."
+   are keywords. If two identical events are received in succession (e.g. many
+   presses of a given key with no intervening releases), they are taken to be
+   system-generated key repeats, and are silently discarded."
   [event-type key-name]
   {:pre [(event-type #{:key-pressed :key-released})]}
-  (swap! event-queue conj [event-type key-name]))
+  (swap! event-queue (fn [queue]
+                       (let [event [event-type key-name]]
+                         (if (not= (last queue) event)
+                           (conj queue event)
+                           queue)))))
 
 (defn consume-events!
   "Return enqueued events and reset the queue."

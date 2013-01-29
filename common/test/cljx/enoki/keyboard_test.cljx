@@ -2,6 +2,13 @@
   (:use [clojure.test]
         [enoki.keyboard]))
 
+(deftest test-discard-duplicate-events
+  (enqueue-event! :key-pressed :a)
+  (enqueue-event! :key-pressed :b)
+  (enqueue-event! :key-pressed :a)
+  (enqueue-event! :key-pressed :a)
+  (is (= [[:key-pressed :a] [:key-pressed :b] [:key-pressed :a]] @event-queue)))
+
 (deftest test-consume-events!
   (enqueue-event! :key-pressed :a)
   (enqueue-event! :key-released :a)
