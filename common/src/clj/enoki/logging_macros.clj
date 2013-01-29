@@ -2,12 +2,12 @@
 ;; Messages are not evaluated unless the message priority exceeds the relevant
 ;; logging level.
 
-(ns enoki.util.logging-macros)
+(ns enoki.logging-macros)
 
 (defmacro log
   "Delegates logging to function in implementation-defined namespace."
   [level msg args]
-  `(enoki.util.logging/log* ~level #(format (str ~msg) ~@args)))
+  `(enoki.logging/log* ~level #(format (str ~msg) ~@args)))
 
 (defmacro debug [msg & args]
   `(log :debug ~msg ~args))

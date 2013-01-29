@@ -4,8 +4,8 @@
         (:require [enoki.event :as e]
                   [enoki.graphics :as g]
                   [enoki.keyboard :as kbd]
-                  [enoki.util.logging] ; required for dependency resolution
-                  [enoki.util.logging-macros :as log]
+                  [enoki.logging] ; required for dependency resolution
+                  [enoki.logging-macros :as log]
                   ))
 
 ^:cljs (ns enoki.engine
@@ -13,9 +13,9 @@
                    [enoki.event :as e]
                    [enoki.graphics :as g]
                    [enoki.keyboard :as kbd]
-                   [enoki.util.logging] ; required for dependency resolution
+                   [enoki.logging] ; required for dependency resolution
                    )
-         (:require-macros [enoki.util.logging-macros :as log]))
+         (:require-macros [enoki.logging-macros :as log]))
 
 (defn fire-key-events [state events]
   (reduce (fn [state [event-type key]]

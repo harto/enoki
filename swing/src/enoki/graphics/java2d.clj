@@ -6,8 +6,8 @@
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
             [enoki.event :as event]
-            [enoki.util.logging]
-            [enoki.util.logging-macros :as log])
+            [enoki.logging]
+            [enoki.logging-macros :as log])
   (:use [enoki.graphics])
   (:import [java.awt Canvas Color Dimension]))
 

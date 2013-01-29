@@ -1,4 +1,4 @@
-(ns enoki.util.logging
+(ns enoki.logging
   (:require [goog.debug.Console]
             [goog.debug.Logger.Level :as Level]
             [goog.debug.LogManager :as LogManager]))
