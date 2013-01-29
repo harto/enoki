@@ -3,7 +3,8 @@
             [goog.debug.Logger.Level :as Level]
             [goog.debug.LogManager :as LogManager]))
 
-(def ^:private levels
+(def ^:private goog-level
+  "Maps keywords to goog.debug.Logger.Levels."
   {:debug Level/FINE
    :info Level/INFO
    :warn Level/WARNING
@@ -19,13 +20,12 @@
   ([level]
      (set-level! (root-logger) level))
   ([logger level]
-     (if-let [level (levels level)]
-       (.setLevel logger level))))
+     (.setLevel logger (goog-level level))))
 
 ;; ## Logging functions
 
 (defn log* [logger-name level message-fn]
-  (let [level (levels level)
+  (let [level (goog-level level)
         logger (get-logger logger-name)]
     (if (.isLoggable logger level)
       (.log logger level (str (message-fn))))))
