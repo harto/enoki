@@ -1,9 +1,12 @@
 (defproject game-swing "0.0.1-SNAPSHOT"
 
   :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.clojure/tools.logging "0.2.4"]
                  [seesaw "1.4.2"]]
 
   :plugins [[com.keminglabs/cljx "0.2.0"]]
+
+  :profiles {:dev {:dependencies [[log4j "1.2.17"]]}}
 
   :source-paths ["src"
                  "generated/src"
