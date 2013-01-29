@@ -39,7 +39,9 @@
 (defn init! []
   (repl/connect "http://localhost:9000/repl")
   (logging/init!)
-  (logging/set-level! :info))
+  ;; FIXME: this should probably come from some configuration
+  (logging/set-level! (logging/root-logger) :warn)
+  (logging/set-level! (logging/get-logger "enoki") :debug))
 
 (defn env
   "Initialise and return a web-based environment."
