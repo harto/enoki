@@ -59,9 +59,9 @@
 (defn enqueue-event!
   "Record a key event for later consumption, where both `event-type` and `key`
    are keywords."
-  [event-type key]
+  [event-type key-name]
   {:pre [(event-type #{:key-pressed :key-released})]}
-  (swap! event-queue conj [event-type key]))
+  (swap! event-queue conj [event-type key-name]))
 
 (defn consume-events!
   "Return enqueued events and reset the queue."
