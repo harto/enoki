@@ -7,7 +7,7 @@
 (defmacro log
   "Delegates logging to function in implementation-defined namespace."
   [level msg args]
-  `(enoki.logging/log* ~level #(format (str ~msg) ~@args)))
+  `(enoki.logging/log* ~(str *ns*) ~level #(format (str ~msg) ~@args)))
 
 (defmacro debug [msg & args]
   `(log :debug ~msg ~args))

@@ -12,8 +12,8 @@
 (defn root-logger []
   (LogManager/getRoot))
 
-;; (defn logger [name]
-;;   (LogManager/getLogger name))
+(defn get-logger [name]
+  (LogManager/getLogger name))
 
 (defn set-level!
   ([level]
@@ -44,10 +44,9 @@
 
 ;; ## Logging functions
 
-(defn log* [level message-fn]
+(defn log* [logger-name level message-fn]
   (let [level (levels level)
-        ;; FIXME: accept logger (name?) as param
-        logger (root-logger)]
+        logger (get-logger logger-name)]
     (if (.isLoggable logger level)
       (.log logger level (str (message-fn))))))
 
