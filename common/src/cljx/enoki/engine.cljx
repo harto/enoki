@@ -23,17 +23,20 @@
           state
           events))
 
+(defn handle-key-input [state key-events]
+  (-> state
+      (update-in [:pressed-keys] kbd/currently-pressed-keys key-events)
+      (fire-key-events key-events)))
+
 (defn update
   "Trigger an update of the game state. All handler functions registered for
    the `:update` event are called with the current game state, and each must
    return an updated state."
   [state]
-  (let [key-events (kbd/consume-events!)]
-    (-> state
-        (update-in [:pressed-keys] kbd/currently-pressed-keys key-events)
-        (fire-key-events key-events)
-        (e/broadcast :update)
-        (update-in [:ticks] inc))))
+  (-> state
+      (handle-key-input (kbd/consume-events!))
+      (e/broadcast :update)
+      (update-in [:ticks] inc)))
 
 (defn render
   "Trigger a render of the current game state on a given display. Handler
