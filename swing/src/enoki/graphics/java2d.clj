@@ -32,7 +32,7 @@
      (seesaw/pack! frame)
      (seesaw/show! frame))
     (.createBufferStrategy canvas 2)
-    (printf "width=%d, height=%d%n" (.getWidth canvas) (.getHeight canvas)))
+    (log/debug "width=%d, height=%d" (.getWidth canvas) (.getHeight canvas)))
 
   (display-width [_]
     (.getWidth canvas))
