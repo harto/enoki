@@ -29,7 +29,7 @@
     (do
       (kbd/enqueue-event! event-type key-name)
       (.preventDefault e))
-    (log/info "unprocessable key event (%s): %s" event-type (.-keyCode e))))
+    (log/info (format "unprocessable key event (%s): %s" event-type (.-keyCode e)))))
 
 (defn capture-key-events! [element]
   (doto element

@@ -24,7 +24,7 @@
 (defn- handle-key-event [event-type e]
   (if-let [key-name (get key-names (.getKeyCode e))]
     (kbd/enqueue-event! event-type key-name)
-    (log/debug "unprocessable key event (%s): %s" event-type e)))
+    (log/debug (format "unprocessable key event (%s): %s" event-type e))))
 
 (defn create-frame []
   (doto (seesaw/frame :resizable? false)
