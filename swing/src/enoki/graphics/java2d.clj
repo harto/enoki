@@ -46,7 +46,7 @@
       (try
         (f (->Graphics2DContext this g))
         (catch Exception e
-          (log/error (.getMessage e)))
+          (log/error "Rendering error" e))
         (finally
          (.show bs)
          (.dispose g))))))
