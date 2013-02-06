@@ -5,17 +5,17 @@
                   [enoki.graphics :as g]
                   [enoki.keyboard :as kbd]
                   [enoki.logging] ; required for dependency resolution
-                  [enoki.logging-macros :as log]
-                  ))
+                  [enoki.logging-macros :as log])
+        (:use [enoki.core :only [now]]))
 
 ^:cljs (ns enoki.engine
          (:require [goog.Timer :as timer]
                    [enoki.event :as e]
                    [enoki.graphics :as g]
                    [enoki.keyboard :as kbd]
-                   [enoki.logging] ; required for dependency resolution
-                   )
-         (:require-macros [enoki.logging-macros :as log]))
+                   [enoki.logging]) ; required for dependency resolution
+         (:require-macros [enoki.logging-macros :as log])
+         (:use [enoki.core :only [now]]))
 
 (defn fire-key-events [state events]
   (reduce (fn [state [event-type key]]
@@ -35,8 +35,21 @@
   [state]
   (-> state
       (handle-key-input (kbd/consume-events!))
-      (e/broadcast :update)
-      (update-in [:ticks] inc)))
+      (e/broadcast :update)))
+
+(defn record-tick-duration
+  [{:keys [last-sample-time last-sec-ticks curr-sec-ticks] :as state} tick]
+  (if (< 1000 (- (now) (or last-sample-time 0)))
+    (assoc state
+      :last-sample-time (now)
+      :last-sec-ticks curr-sec-ticks
+      :curr-sec-ticks [tick])
+    (update-in state [:curr-sec-ticks] conj tick)))
+
+(defn fps
+  "Count the number of ticks from the last second."
+  [state]
+  (reduce + 0 (:last-sec-ticks state)))
 
 (defn render
   "Trigger a render of the current game state on a given display. Handler
@@ -49,8 +62,10 @@
   (g/render display (fn [ctx] (e/broadcast state :render ctx))))
 
 (defn tick [{:keys [state display] :as env}]
-  (render state display)
-  (assoc-in env [:state] (update state)))
+  (let [tick-start (now)]
+    (render state display)
+    (update-in env [:state] update)
+    (update-in env [:state] record-tick-duration (- (now) tick-start))))
 
 ;; ## Game loop
 ;;
