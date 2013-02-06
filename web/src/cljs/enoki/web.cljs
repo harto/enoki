@@ -41,7 +41,8 @@
   (logging/init!)
   ;; FIXME: this should probably come from some configuration
   (logging/set-level! (logging/root-logger) :warn)
-  (logging/set-level! (logging/get-logger "enoki") :debug))
+  (logging/set-level! (logging/get-logger "enoki") :debug)
+  (logging/set-level! (logging/get-logger "game") :debug))
 
 (defn env
   "Initialise and return a web-based environment."
