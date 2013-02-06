@@ -49,7 +49,7 @@
 (defn fps
   "Count the number of ticks from the last second."
   [state]
-  (reduce + 0 (:last-sec-ticks state)))
+  (count (:last-sec-ticks state)))
 
 (defn render
   "Trigger a render of the current game state on a given display. Handler
