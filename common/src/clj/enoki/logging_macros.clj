@@ -3,7 +3,7 @@
 ;; Implementations must provide the `enoki.logging` namespace, and define a
 ;; logging function within that namespace that looks like:
 ;;
-;;     (fn log* [logger-name level eval-msg-fn])
+;;     (fn log* [logger-name level eval-msg-fn throwable])
 ;;
 ;; Messages are not evaluated unless the message priority exceeds the relevant
 ;; logging level.
@@ -12,17 +12,23 @@
 
 (defmacro log
   "Delegates logging to function in implementation-defined namespace."
-  [level msg]
-  `(enoki.logging/log* ~(str *ns*) ~level #(str ~msg)))
+  ([level msg]
+     `(log ~level ~msg nil))
+  ([level msg throwable]
+     `(enoki.logging/log* ~(str *ns*) ~level #(str ~msg) ~throwable)))
 
-(defmacro debug [msg]
-  `(log :debug ~msg))
+(defmacro debug
+  ([msg] `(debug ~msg nil))
+  ([msg throwable] `(log :debug ~msg ~throwable)))
 
-(defmacro info [msg]
-  `(log :info ~msg))
+(defmacro info
+  ([msg] `(info ~msg nil))
+  ([msg throwable] `(log :info ~msg ~throwable)))
 
-(defmacro warn [msg]
-  `(log :warn ~msg))
+(defmacro warn
+  ([msg] `(warn ~msg nil))
+  ([msg throwable] `(log :warn ~msg ~throwable)))
 
-(defmacro error [msg]
-  `(log :error ~msg))
+(defmacro error
+  ([msg] `(error ~msg nil))
+  ([msg throwable] `(log :error ~msg ~throwable)))

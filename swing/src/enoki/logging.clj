@@ -12,5 +12,5 @@
 (ns enoki.logging
   (:require [clojure.tools.logging :as impl]))
 
-(defn log* [logger-name level msg-fn]
- (impl/log logger-name level nil (msg-fn)))
+(defn log* [logger-name level eval-msg-fn throwable]
+  (impl/log logger-name level throwable (eval-msg-fn)))

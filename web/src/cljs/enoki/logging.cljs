@@ -27,11 +27,12 @@
 
 ;; ## Logging functions
 
-(defn log* [logger-name level message-fn]
+(defn log* [logger-name level eval-msg-fn throwable]
   (let [level (goog-level level)
         logger (get-logger logger-name)]
     (if (.isLoggable logger level)
-      (.log logger level (str (message-fn))))))
+      ;; FIXME: log throwable
+      (.log logger level (eval-msg-fn)))))
 
 ;; ## Initialisation
 
