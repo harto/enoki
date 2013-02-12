@@ -1,4 +1,4 @@
-This directory contains platform-independent sources.
+This directory contains the platform-agnostic core.
 
  * `src/cljx` contains `.cljx` files, which are annotated sources that can be
    compiled to either Clojure or ClojureScript code by [cljx][1].

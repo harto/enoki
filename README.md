@@ -4,5 +4,7 @@ Clojure platform (e.g. Android). It currently only targets the browser and Java
 desktop.
 
  * `common` contains platform-independent sources.
-
  * `web` and `swing` contain platform-specific bindings.
+ * `example` contains an example game implementation.
+
+Eventually each of these subdirectories will be split into its own repo.

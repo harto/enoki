@@ -1,12 +1,12 @@
-(defproject game-swing "0.0.1-SNAPSHOT"
+(defproject enoki-swing "0.0.1-SNAPSHOT"
+
+  ;; FIXME: this doesn't really do anything; it only exists for CI at this stage
 
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [org.clojure/tools.logging "0.2.4"]
                  [seesaw "1.4.2"]]
 
   :plugins [[com.keminglabs/cljx "0.2.0"]]
-
-  :profiles {:dev {:dependencies [[log4j "1.2.17"]]}}
 
   :source-paths ["src"
                  "generated/src"
@@ -25,6 +25,4 @@
                    :include-meta true
                    :rules cljx.rules/clj-rules}]}
 
-  :aliases {"cibuild" ["do" "cljx," "test"]}
-
-  :main game.swing.main)
+  :aliases {"cibuild" ["do" "cljx," "test"]})
