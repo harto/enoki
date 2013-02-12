@@ -1,4 +1,4 @@
-This is a Swing-based engine implementation.
+This is a Swing-based game implementation.
 
 To run, try `lein do cljx, run`.
 
