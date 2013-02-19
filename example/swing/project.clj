@@ -16,6 +16,9 @@
   :test-paths ["test/clj"
                "generated/test"]
 
+  :resource-paths ["resources"
+                   "../common/assets"]
+
   :cljx {:builds [{:source-paths ["../common/src/cljx"
                                   "../../common/src/cljx"]
                    :output-path "generated/src"

@@ -1,4 +1,5 @@
-;; A single-page Ring application that serves the ClojureScript environment.
+;; A basic Ring application that serves the ClojureScript environment along
+;; with game assets.
 
 (ns game.web.server
   (:use [compojure.core :only (routes GET)]
@@ -28,7 +29,7 @@
 (def ^:private app
   (-> (routes (GET "/" [] (index))
               (GET "/deps.js" [] ""))
-      (wrap-file "resources/public")
+      (wrap-file "resources/public" {:allow-symlinks? true})
       (wrap-stacktrace)))
 
 ;; ## Jetty server

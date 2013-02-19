@@ -1,14 +1,22 @@
 ^:clj (ns game.main
         (:require [clojure.string :as str]
+                  [enoki.asset :as asset]
                   [enoki.engine :as enoki]
                   [enoki.event :as event]
-                  [enoki.graphics :as gfx]))
+                  [enoki.graphics :as gfx]
+                  [enoki.logging]
+                  [enoki.logging-macros :as log])
+        (:use [enoki.core :only [now]]))
 
 ^:cljs (ns game.main
          (:require [clojure.string :as str]
+                   [enoki.asset :as asset]
                    [enoki.engine :as enoki]
                    [enoki.event :as event]
-                   [enoki.graphics :as gfx])
+                   [enoki.graphics :as gfx]
+                   [enoki.logging :as _])
+         (:require-macros [enoki.logging-macros :as log])
+         (:use [enoki.core :only [now]])
          (:use-macros [enoki.cljs-macros :only [double]]))
 
 (defn print-fps [ctx fps]
@@ -26,6 +34,23 @@
 (defn initial-state []
   {})
 
-(defn start [env]
+(defn enter-loop [env]
   (event/subscribe! :render (fn [state _ ctx] (render state ctx)))
-  (enoki/start (assoc env :state (initial-state))))
+  (enoki/start (assoc env :state
+                      ;; FIXME: stupid hack to get assets into :state
+                      (merge (initial-state)
+                             {:assets (:assets env)}))))
+
+(defn start [env]
+  (let [start-time (now)]
+    (asset/load-images
+     ["images/alien.png"
+      "images/hamburger.gif"
+      "images/stars.jpg"]
+     :after-asset (fn [path _]
+                    (log/info (format "Loaded %s" path)))
+     :on-load (fn [images]
+                (log/debug (format "Loaded %s images in %01.3f seconds"
+                                   (count images)
+                                   (double (/ (- (now) start-time) 1000))))
+                (enter-loop (assoc-in env [:assets] images))))))
