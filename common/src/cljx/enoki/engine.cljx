@@ -64,8 +64,9 @@
 (defn tick [{:keys [state display] :as env}]
   (let [tick-start (now)]
     (render state display)
-    (update-in env [:state] update)
-    (update-in env [:state] record-tick-duration (- (now) tick-start))))
+    (-> env
+        (update-in [:state] update)
+        (update-in [:state] record-tick-duration (- (now) tick-start)))))
 
 ;; ## Game loop
 ;;
