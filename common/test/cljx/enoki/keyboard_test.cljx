@@ -18,3 +18,7 @@
 (deftest test-currently-pressed-keys
   (let [events [[:key-pressed :foo] [:key-released :foo] [:key-pressed :bar] [:key-pressed :foo]]]
     (is (= #{:foo :bar} (currently-pressed-keys nil events)))))
+
+(deftest test-persists-currently-pressed-keys
+  (let [events [[:key-pressed :foo]]]
+    (is (= #{:foo :bar} (currently-pressed-keys #{:bar} events)))))
