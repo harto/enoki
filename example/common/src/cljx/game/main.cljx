@@ -29,7 +29,8 @@
   (-> ctx
       (gfx/clear!)
       (print-fps (enoki/fps state))
-      (print-pressed-keys (:pressed-keys state))))
+      (print-pressed-keys (:pressed-keys state))
+      (gfx/draw-image! (get-in state [:assets "images/alien.png"]) 10 60)))
 
 (defn initial-state []
   {})
