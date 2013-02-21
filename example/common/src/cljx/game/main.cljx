@@ -19,11 +19,13 @@
          (:use [enoki.core :only [now]])
          (:use-macros [enoki.cljs-macros :only [double]]))
 
+;; ## Loop
+
 (defn print-fps [ctx fps]
   (gfx/draw-text! ctx (format "%03.1ffps" (double fps)) 10 20))
 
 (defn print-pressed-keys [ctx keys]
-  (gfx/draw-text! ctx (str/join ", " keys) 10 40))
+  (gfx/draw-text! ctx (format "keys: %s" (str/join ", " keys)) 10 40))
 
 (defn render [state ctx]
   (-> ctx
