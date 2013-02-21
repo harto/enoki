@@ -13,6 +13,10 @@
 
   (draw-text! [this s x y]
     (.fillText ctx s x y)
+    this)
+
+  (draw-image! [this img x y]
+    (.drawImage ctx img x y)
     this))
 
 (defrecord CanvasDisplay [canvas]

@@ -8,7 +8,10 @@
     "Fill the display with the current background colour and return `this`.")
 
   (draw-text! [this s x y]
-    "Draw string `s' at location `(x, y)` and return `this`."))
+    "Draw string `s` at location `(x, y)` and return `this`.")
+
+  (draw-image! [this image x y]
+    "Draw image `img` at location `(x, y)` and return `this`."))
 
 (defprotocol Display
 

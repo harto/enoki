@@ -9,7 +9,7 @@
             [enoki.logging]
             [enoki.logging-macros :as log])
   (:use [enoki.graphics])
-  (:import [java.awt Canvas Color Dimension]))
+  (:import [java.awt Canvas Color Dimension Image]))
 
 (defrecord Graphics2DContext [display g]
 
@@ -21,6 +21,10 @@
 
   (draw-text! [this s x y]
     (.drawString g (str s) x y)
+    this)
+
+  (draw-image! [this img x y]
+    (.drawImage g img x y nil)
     this))
 
 (defrecord CanvasDisplay [frame canvas]
