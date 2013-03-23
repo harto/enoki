@@ -5,10 +5,12 @@
   :plugins [[com.keminglabs/cljx "0.2.1"]
             [lein-cljsbuild "0.3.0"]]
 
-  :source-paths ["src/clj"]
+  :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.2"]]}}
 
-  :test-paths ["test/cljs"
-               "generated/test"]
+  :source-paths ["src/cljs"
+                 "generated/src"]
+
+  ;; :test-paths ["generated/test"]
 
   ;; FIXME: update once implementations are separated from core
   :cljx {:builds [{:source-paths ["../common/src/cljx"]
@@ -23,9 +25,11 @@
                    :include-meta true
                    :rules cljx.rules/cljs-rules}]}
 
-  ;; :cljsbuild {:builds [{:source-paths ["src/cljs"
-  ;;                                      "generated/src"
-  ;;                                      "../common/src/clj"]
-  ;;                       :compiler {:output-to "resources/public/js/main.js"}}]}
+  :cljsbuild {:builds [{:source-paths ["src/cljs"
+                                       "generated/src"
+                                       "../common/src/clj"
+                                       "generated/test"]
+                        :compiler {:output-to "target/cljs/test-suite.js"}}]
+              :test-commands {"unit-tests" ["test/test-runner.js" "target/cljs/test-suite.js"]}}
 
-  :aliases {"cibuild" ["do" "cljx," "cljsbuild" "once," "test"]})
+  :aliases {"cibuild" ["do" "cljx," "cljsbuild" "once," "cljsbuild" "test"]})

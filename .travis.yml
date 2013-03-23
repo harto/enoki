@@ -5,8 +5,8 @@ jdk:
   - openjdk7
 # Yeah, these need to go into separate repos :-/
 install:
-#  - (cd web; lein2 deps >/dev/null)
+  - (cd web; lein2 deps >/dev/null)
   - (cd swing; lein2 deps >/dev/null)
 script:
-#  - (cd web; lein2 cibuild)
+  - (cd web; lein2 cibuild)
   - (cd swing; lein2 cibuild)

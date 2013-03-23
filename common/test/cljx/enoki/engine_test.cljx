@@ -1,8 +1,15 @@
-(ns enoki.engine-test
-  (:use [clojure.test]
-        [enoki.engine])
-  (:require [enoki.event :as e]
-            [enoki.graphics :as g]))
+^:clj (ns enoki.engine-test
+        (:require [enoki.engine :as engine]
+                  [enoki.event :as e]
+                  [enoki.graphics :as g])
+        (:use [clojure.test :only [deftest testing is]]))
+
+^:cljs (ns enoki.engine-test
+         (:require [cemerick.cljs.test :as test]
+                   [enoki.engine :as engine]
+                   [enoki.event :as e]
+                   [enoki.graphics :as g])
+         (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
 
 (deftest test-fire-key-events
   (testing "handlers return updated state"
@@ -13,21 +20,21 @@
     (let [initial-state {:keys-pressed #{}
                          :keys-released #{}}
           events [[:key-pressed :a] [:key-pressed :b] [:key-released :b] [:key-released :a]]
-          updated-state (fire-key-events initial-state events)]
+          updated-state (engine/fire-key-events initial-state events)]
       (is (= #{:a :b} (:keys-pressed updated-state)))
       (is (= #{:a :b} (:keys-released updated-state))))))
 
 (defrecord DummyDisplay []
   g/Display
-  (g/init-display! [_])
-  (g/display-width [_])
-  (g/display-height [_])
-  (g/render [this f] (f :dummy-context)))
+  (init-display! [_])
+  (display-width [_])
+  (display-height [_])
+  (render [this f] (f :dummy-context)))
 
 (deftest test-render
   (let [state {}
         renderer-args (atom nil)
         renderer (fn [& args] (reset! renderer-args args))]
     (e/subscribe! :render renderer)
-    (render state (->DummyDisplay))
+    (engine/render state (->DummyDisplay))
     (is (= [state :render :dummy-context] @renderer-args))))

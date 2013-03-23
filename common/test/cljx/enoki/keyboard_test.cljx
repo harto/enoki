@@ -1,24 +1,33 @@
-(ns enoki.keyboard-test
-  (:use [clojure.test]
-        [enoki.keyboard]))
+^:clj (ns enoki.keyboard-test
+        (:require [enoki.keyboard :as k])
+        (:use [clojure.test :only [deftest testing is]]))
+
+^:cljs (ns enoki.keyboard-test
+        (:require [cemerick.cljs.test :as _]
+                  [enoki.keyboard :as k])
+        (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
 
 (deftest test-discard-duplicate-events
-  (enqueue-event! :key-pressed :a)
-  (enqueue-event! :key-pressed :b)
-  (enqueue-event! :key-pressed :a)
-  (enqueue-event! :key-pressed :a)
-  (is (= [[:key-pressed :a] [:key-pressed :b] [:key-pressed :a]] @event-queue)))
+  (k/enqueue-event! :key-pressed :a)
+  (k/enqueue-event! :key-pressed :b)
+  (k/enqueue-event! :key-pressed :a)
+  (k/enqueue-event! :key-pressed :a)
+  (is (= [[:key-pressed :a] [:key-pressed :b] [:key-pressed :a]] @k/event-queue)))
 
 (deftest test-consume-events!
-  (enqueue-event! :key-pressed :a)
-  (enqueue-event! :key-released :a)
-  (is (= [[:key-pressed :a] [:key-released :a]] (consume-events!)))
-  (is (= [] (consume-events!))))
+  (k/consume-events!)
+  (k/enqueue-event! :key-pressed :a)
+  (k/enqueue-event! :key-released :a)
+  (is (= [[:key-pressed :a] [:key-released :a]] (k/consume-events!)))
+  (is (= [] (k/consume-events!))))
 
 (deftest test-currently-pressed-keys
-  (let [events [[:key-pressed :foo] [:key-released :foo] [:key-pressed :bar] [:key-pressed :foo]]]
-    (is (= #{:foo :bar} (currently-pressed-keys nil events)))))
+  (let [events [[:key-pressed :foo]
+                [:key-released :foo]
+                [:key-pressed :bar]
+                [:key-pressed :foo]]]
+    (is (= #{:foo :bar} (k/currently-pressed-keys nil events)))))
 
 (deftest test-persists-currently-pressed-keys
   (let [events [[:key-pressed :foo]]]
-    (is (= #{:foo :bar} (currently-pressed-keys #{:bar} events)))))
+    (is (= #{:foo :bar} (k/currently-pressed-keys #{:bar} events)))))
