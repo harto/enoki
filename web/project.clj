@@ -1,10 +1,8 @@
 (defproject enoki-web "0.0.1-SNAPSHOT"
 
-  ;; FIXME: this doesn't really do anything at the moment
+  :dependencies [[org.clojure/clojure "1.5.0"]]
 
-  :dependencies [[org.clojure/clojure "1.4.0"]]
-
-  :plugins [[com.keminglabs/cljx "0.2.0"]
+  :plugins [[com.keminglabs/cljx "0.2.1"]
             [lein-cljsbuild "0.3.0"]]
 
   :source-paths ["src/clj"]

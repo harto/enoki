@@ -1,11 +1,11 @@
 (defproject game-web "0.0.1-SNAPSHOT"
 
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.0"]
                  [ring "1.1.6"]
                  [compojure "1.1.3"]
                  [enlive "1.0.0"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.0"]
+  :plugins [[com.keminglabs/cljx "0.2.1"]
             [lein-cljsbuild "0.3.0"]]
 
   :source-paths ["src/clj"]

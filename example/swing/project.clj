@@ -1,10 +1,10 @@
 (defproject game-swing "0.0.1-SNAPSHOT"
 
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.0"]
                  [org.clojure/tools.logging "0.2.4"]
                  [seesaw "1.4.2"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.0"]]
+  :plugins [[com.keminglabs/cljx "0.2.1"]]
 
   :profiles {:dev {:dependencies [[log4j "1.2.17"]]}}
 

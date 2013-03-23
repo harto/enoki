@@ -2,11 +2,11 @@
 
   ;; FIXME: this doesn't really do anything; it only exists for CI at this stage
 
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.0"]
                  [org.clojure/tools.logging "0.2.4"]
                  [seesaw "1.4.2"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.0"]]
+  :plugins [[com.keminglabs/cljx "0.2.1"]]
 
   :source-paths ["src"
                  "generated/src"
