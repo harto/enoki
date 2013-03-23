@@ -8,3 +8,5 @@ desktop.
  * `example` contains an example game implementation.
 
 Eventually each of these subdirectories will be split into its own repo.
+
+[![Build status](https://travis-ci.org/harto/enoki.png)](https://travis-ci.org/harto/enoki)
