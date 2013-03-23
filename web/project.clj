@@ -32,4 +32,4 @@
                         :compiler {:output-to "target/cljs/test-suite.js"}}]
               :test-commands {"unit-tests" ["test/test-runner.js" "target/cljs/test-suite.js"]}}
 
-  :aliases {"cibuild" ["do" "cljx," "cljsbuild" "once," "cljsbuild" "test"]})
+  :aliases {"citest" ["do" "cljx," "cljsbuild" "once," "cljsbuild" "test"]})

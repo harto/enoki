@@ -25,4 +25,4 @@
                    :include-meta true
                    :rules cljx.rules/clj-rules}]}
 
-  :aliases {"cibuild" ["do" "cljx," "test"]})
+  :aliases {"citest" ["do" "cljx," "test"]})
