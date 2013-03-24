@@ -7,13 +7,6 @@
                   [enoki.keyboard :as k])
         (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
 
-(deftest test-discard-duplicate-events
-  (k/enqueue-event! :key-pressed :a)
-  (k/enqueue-event! :key-pressed :b)
-  (k/enqueue-event! :key-pressed :a)
-  (k/enqueue-event! :key-pressed :a)
-  (is (= [[:key-pressed :a] [:key-pressed :b] [:key-pressed :a]] @k/event-queue)))
-
 (deftest test-consume-events!
   (k/consume-events!)
   (k/enqueue-event! :key-pressed :a)
