@@ -19,7 +19,25 @@
          (:use [enoki.core :only [now]])
          (:use-macros [enoki.cljs-macros :only [double]]))
 
-;; ## Loop
+;; ## Update
+
+(defn initial-state []
+  {:alien {:position {:x 10 :y 60}}})
+
+(defn movement [pressed-keys]
+  (let [x-offsets {:left -1 :right 1}
+        y-offsets {:up -1 :down 1}]
+    (reduce (fn [offset pressed-key]
+              (update-in offset [x] + (get x-offsets pressed-key 0))
+              (update-in offset [y] + (get y-offsets pressed-key 0)))
+            {:x 0 :y 0}
+            pressed-keys)))
+
+(defn update [state]
+  (let [{:keys [x y]} (movement (:pressed-keys state))]
+    ))
+
+;; ## Draw
 
 (defn print-fps [ctx fps]
   (gfx/draw-text! ctx (format "%03.1ffps" (double fps)) 10 20))
@@ -32,12 +50,14 @@
       (gfx/clear!)
       (print-fps (enoki/fps state))
       (print-pressed-keys (:pressed-keys state))
-      (gfx/draw-image! (get-in state [:assets "images/alien.png"]) 10 60)))
+      (gfx/draw-image! (get-in state [:assets "images/alien.png"])
+                       (get-in state [:alien :x])
+                       (get-in state [:alien :y]))))
 
-(defn initial-state []
-  {})
+;; ## Loop
 
 (defn enter-loop [env]
+  (event/subscribe! :update (fn [state _] (update state)))
   (event/subscribe! :render (fn [state _ ctx] (render state ctx)))
   (enoki/start (assoc env :state
                       ;; FIXME: stupid hack to get assets into :state
