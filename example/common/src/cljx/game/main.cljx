@@ -2,27 +2,32 @@
         (:require [clojure.string :as str]
                   [enoki.asset :as asset]
                   [enoki.engine :as enoki]
+                  [enoki.entity :as entity]
                   [enoki.event :as event]
                   [enoki.graphics :as gfx]
                   [enoki.logging]
-                  [enoki.logging-macros :as log])
+                  [enoki.logging-macros :as log]
+                  [game.component :as comp])
         (:use [enoki.core :only [now]]))
 
 ^:cljs (ns game.main
          (:require [clojure.string :as str]
                    [enoki.asset :as asset]
                    [enoki.engine :as enoki]
+                   [enoki.entity :as entity]
                    [enoki.event :as event]
                    [enoki.graphics :as gfx]
-                   [enoki.logging :as _])
+                   [enoki.logging :as _]
+                   [game.component :as comp])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]])
          (:use-macros [enoki.cljs-macros :only [double]]))
 
-;; ## Update
-
 (defn initial-state []
-  {:alien {:position {:x 10 :y 60}}})
+  {:entities [(entity/new (comp/sprite "images/alien.png")
+                          (comp/position 10 60))]})
+
+;; ## Update
 
 (defn movement [pressed-keys]
   (let [x-offsets {:left -1 :right 1}
@@ -39,25 +44,35 @@
 
 ;; ## Draw
 
-(defn print-fps [ctx fps]
+(defn image [state id]
+  (get-in state [:assets id]))
+
+(defn print-fps! [ctx fps]
   (gfx/draw-text! ctx (format "%03.1ffps" (double fps)) 10 20))
 
-(defn print-pressed-keys [ctx keys]
+(defn print-pressed-keys! [ctx keys]
   (gfx/draw-text! ctx (format "keys: %s" (str/join ", " keys)) 10 40))
+
+(defn draw-sprite! [ctx state entity]
+  (let [image-id (get-in entity [:sprite :image-id])
+        {:keys [x y]} (get entity :position)]
+    (gfx/draw-image! ctx (image state image-id) x y)))
+
+(defn draw-sprites! [ctx state]
+  (doseq [e (entity/with-component (:entities state) :sprite)]
+    (draw-sprite! ctx state e)))
 
 (defn render [state ctx]
   (-> ctx
       (gfx/clear!)
-      (print-fps (enoki/fps state))
-      (print-pressed-keys (:pressed-keys state))
-      (gfx/draw-image! (get-in state [:assets "images/alien.png"])
-                       (get-in state [:alien :x])
-                       (get-in state [:alien :y]))))
+      (print-fps! (enoki/fps state))
+      (print-pressed-keys! (:pressed-keys state))
+      (draw-sprites! state)))
 
 ;; ## Loop
 
 (defn enter-loop [env]
-  (event/subscribe! :update (fn [state _] (update state)))
+  ;(event/subscribe! :update (fn [state _] (update state)))
   (event/subscribe! :render (fn [state _ ctx] (render state ctx)))
   (enoki/start (assoc env :state
                       ;; FIXME: stupid hack to get assets into :state
