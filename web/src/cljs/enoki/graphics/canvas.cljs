@@ -1,8 +1,8 @@
 ;; An HTML5 `<canvas>`-based graphics implementation.
 
 (ns enoki.graphics.canvas
-  (:require-macros [enoki.logging-macros :as log])
-  (:use [enoki.graphics :only [Context Display display-width display-height]]))
+  (:use [enoki.graphics :only [Context Display display-width display-height]])
+  (:use-macros [enoki.error-macros :only [signal-error]]))
 
 (defrecord CanvasContext [display ctx]
 
@@ -40,4 +40,4 @@
            (->CanvasContext this)
            (f))
       (catch js/Error e
-        (log/error "Rendering error" e)))))
+        (signal-error "Rendering error" e)))))

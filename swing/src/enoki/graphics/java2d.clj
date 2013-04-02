@@ -6,9 +6,9 @@
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
             [enoki.event :as event]
-            [enoki.logging]
             [enoki.logging-macros :as log])
-  (:use [enoki.graphics])
+  (:use [enoki.error-macros :only [signal-error]]
+        [enoki.graphics])
   (:import [java.awt Canvas Color Dimension Image]))
 
 (defrecord Graphics2DContext [display g]
@@ -50,7 +50,7 @@
       (try
         (f (->Graphics2DContext this g))
         (catch Exception e
-          (log/error "Rendering error" e))
+          (signal-error "Rendering error" e))
         (finally
          (.show bs)
          (.dispose g))))))

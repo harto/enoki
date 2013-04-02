@@ -1,8 +1,12 @@
 ;; Asset management
 
-(ns enoki.asset
-  (:require [enoki.asset-impl :as impl])
-  (:use [enoki.error :only [error]]))
+^:clj (ns enoki.asset
+        (:require [enoki.asset-impl :as impl])
+        (:use [enoki.error-macros :only [signal-error]]))
+
+^:cljs (ns enoki.asset
+         (:require [enoki.asset-impl :as impl])
+         (:use-macros [enoki.error-macros :only [signal-error]]))
 
 ;; FIXME: assets should be loaded in parallel
 (defn- load-assets*
@@ -17,7 +21,7 @@
                            (if on-load (on-load assets)))))
         asset-errored (or on-error
                           (fn [path]
-                            (throw (error (format "Failed to load image %s" path)))))]
+                            (signal-error (format "Failed to load image %s" path))))]
     (if before-asset (before-asset path))
     (load-asset path asset-loaded asset-errored)))
 
@@ -38,7 +42,7 @@
 
      * `:on-error`     - a function `(fn [path])` that is called when an asset
                          fails to load. If this function is omitted, an
-                         exception is thrown if any asset fails to load."
+                         error is signalled if any asset fails to load."
   [paths load-asset & callbacks]
   (apply load-assets* {} paths load-asset callbacks))
 
