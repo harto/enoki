@@ -2,7 +2,8 @@
   (:require [clojure.browser.repl :as repl]
             [enoki.graphics.canvas :as gfx]
             [enoki.keyboard :as kbd]
-            [enoki.logging :as logging])
+            [enoki.logging :as logging]
+            [enoki.macro-requirements])
   (:require-macros [enoki.logging-macros :as log]))
 
 (def key-names

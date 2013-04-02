@@ -3,8 +3,8 @@
             [seesaw.core :as seesaw]
             [enoki.graphics.java2d :as gfx]
             [enoki.keyboard :as kbd]
-            [enoki.logging]
-            [enoki.logging-macros :as log])
+            [enoki.logging-macros :as log]
+            [enoki.macro-requirements])
   (:import [java.awt.event KeyEvent]))
 
 (def ^:private key-names

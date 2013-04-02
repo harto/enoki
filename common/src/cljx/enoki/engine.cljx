@@ -4,7 +4,6 @@
         (:require [enoki.event :as e]
                   [enoki.graphics :as g]
                   [enoki.keyboard :as kbd]
-                  [enoki.logging] ; required for dependency resolution
                   [enoki.logging-macros :as log])
         (:use [enoki.core :only [now]]))
 
@@ -12,8 +11,7 @@
          (:require [goog.Timer :as timer]
                    [enoki.event :as e]
                    [enoki.graphics :as g]
-                   [enoki.keyboard :as kbd]
-                   [enoki.logging]) ; required for dependency resolution
+                   [enoki.keyboard :as kbd])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]]))
 
