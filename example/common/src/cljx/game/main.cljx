@@ -42,9 +42,6 @@
 
 ;; ## Draw
 
-(defn image [state id]
-  (get-in state [:assets id]))
-
 (defn print-fps! [ctx fps]
   (gfx/draw-text! ctx (format "%03.1ffps" (double fps)) 10 20))
 
@@ -54,7 +51,7 @@
 (defn draw-sprite! [ctx state entity]
   (let [image-id (get-in entity [:sprite :image-id])
         {:keys [x y]} (get entity :position)]
-    (gfx/draw-image! ctx (image state image-id) x y)))
+    (gfx/draw-image! ctx (asset/image state image-id) x y)))
 
 (defn draw-sprites! [ctx state]
   (doseq [e (entity/with-component (:entities state) :sprite)]

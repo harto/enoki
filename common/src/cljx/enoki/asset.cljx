@@ -8,6 +8,8 @@
          (:require [enoki.asset-impl :as impl])
          (:use-macros [enoki.error-macros :only [signal-error]]))
 
+;; ## Loading
+
 ;; FIXME: assets should be loaded in parallel
 (defn- load-assets*
   [assets paths load-asset & callbacks]
@@ -51,3 +53,10 @@
 
 (defn load-images [paths & callbacks]
   (apply load-assets paths load-image callbacks))
+
+;; ## Retrieval
+
+(defn image [state id]
+  (if-let [image (get-in state [:assets id])]
+    image
+    (signal-error (format "Unknown image %s" id))))
