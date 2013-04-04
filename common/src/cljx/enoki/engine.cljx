@@ -4,8 +4,8 @@
         (:require [enoki.event :as e]
                   [enoki.graphics :as g]
                   [enoki.keyboard :as kbd]
-                  [enoki.logging-macros :as log]
-                  [enoki.macro-requirements])
+                  [enoki.logging]
+                  [enoki.logging-macros :as log])
         (:use [enoki.core :only [now]]))
 
 ^:cljs (ns enoki.engine
@@ -13,7 +13,7 @@
                    [enoki.event :as e]
                    [enoki.graphics :as g]
                    [enoki.keyboard :as kbd]
-                   [enoki.macro-requirements])
+                   [enoki.logging])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]]))
 

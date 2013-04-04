@@ -5,9 +5,10 @@
 
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
+            [enoki.error]
             [enoki.event :as event]
-            [enoki.logging-macros :as log]
-            [enoki.macro-requirements])
+            [enoki.logging]
+            [enoki.logging-macros :as log])
   (:use [enoki.error-macros :only [signal-error]]
         [enoki.graphics])
   (:import [java.awt Canvas Color Dimension Image]))

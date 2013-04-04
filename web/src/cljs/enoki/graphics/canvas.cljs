@@ -1,7 +1,7 @@
 ;; An HTML5 `<canvas>`-based graphics implementation.
 
 (ns enoki.graphics.canvas
-  (:require [enoki.macro-requirements])
+  (:require [enoki.error])
   (:use [enoki.graphics :only [Context Display display-width display-height]])
   (:use-macros [enoki.error-macros :only [signal-error]]))
 

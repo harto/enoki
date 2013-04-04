@@ -2,12 +2,12 @@
 
 ^:clj (ns enoki.asset
         (:require [enoki.asset-impl :as impl]
-                  [enoki.macro-requirements])
+                  [enoki.error])
         (:use [enoki.error-macros :only [signal-error]]))
 
 ^:cljs (ns enoki.asset
          (:require [enoki.asset-impl :as impl]
-                   [enoki.macro-requirements])
+                   [enoki.error])
          (:use-macros [enoki.error-macros :only [signal-error]]))
 
 ;; ## Loading
