@@ -25,8 +25,8 @@
 ;; Unfortunately it doesn't, and so the kludgey solution implemented here is to
 ;; simply require all namespaces required by all macroexpanded code :-(
 ;;
-;; This file only needs to be included once, near the start of your program
-;; (i.e. probably in the namespace that defines your program's entry point).
+;; Although this file only needs to be required once, it's safest to do so
+;; whenever a macro namespace is included.
 
 (ns enoki.macro-requirements
   (:require [enoki.core]

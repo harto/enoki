@@ -1,9 +1,11 @@
 ;; Game-specific components
 
 ^:clj (ns game.component
-         (:use [enoki.component-macros :only [defcomponent]]))
+        (:require [enoki.macro-requirements])
+        (:use [enoki.component-macros :only [defcomponent]]))
 
 ^:cljs (ns game.component
+         (:require [enoki.macro-requirements])
          (:use-macros [enoki.component-macros :only [defcomponent]]))
 
 (defcomponent position [x y]

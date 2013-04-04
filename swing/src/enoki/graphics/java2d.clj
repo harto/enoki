@@ -6,7 +6,8 @@
 (ns enoki.graphics.java2d
   (:require [seesaw.core :as seesaw]
             [enoki.event :as event]
-            [enoki.logging-macros :as log])
+            [enoki.logging-macros :as log]
+            [enoki.macro-requirements])
   (:use [enoki.error-macros :only [signal-error]]
         [enoki.graphics])
   (:import [java.awt Canvas Color Dimension Image]))

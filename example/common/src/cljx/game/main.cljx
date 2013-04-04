@@ -6,6 +6,7 @@
                   [enoki.event :as event]
                   [enoki.graphics :as gfx]
                   [enoki.logging-macros :as log]
+                  [enoki.macro-requirements]
                   [game.component :as comp])
         (:use [enoki.core :only [now]]))
 
@@ -16,6 +17,7 @@
                    [enoki.entity :as entity]
                    [enoki.event :as event]
                    [enoki.graphics :as gfx]
+                   [enoki.macro-requirements]
                    [game.component :as comp])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]])

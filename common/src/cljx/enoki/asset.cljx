@@ -1,11 +1,13 @@
 ;; Asset management
 
 ^:clj (ns enoki.asset
-        (:require [enoki.asset-impl :as impl])
+        (:require [enoki.asset-impl :as impl]
+                  [enoki.macro-requirements])
         (:use [enoki.error-macros :only [signal-error]]))
 
 ^:cljs (ns enoki.asset
-         (:require [enoki.asset-impl :as impl])
+         (:require [enoki.asset-impl :as impl]
+                   [enoki.macro-requirements])
          (:use-macros [enoki.error-macros :only [signal-error]]))
 
 ;; ## Loading

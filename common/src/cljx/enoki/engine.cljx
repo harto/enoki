@@ -4,14 +4,16 @@
         (:require [enoki.event :as e]
                   [enoki.graphics :as g]
                   [enoki.keyboard :as kbd]
-                  [enoki.logging-macros :as log])
+                  [enoki.logging-macros :as log]
+                  [enoki.macro-requirements])
         (:use [enoki.core :only [now]]))
 
 ^:cljs (ns enoki.engine
          (:require [goog.Timer :as timer]
                    [enoki.event :as e]
                    [enoki.graphics :as g]
-                   [enoki.keyboard :as kbd])
+                   [enoki.keyboard :as kbd]
+                   [enoki.macro-requirements])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]]))
 
