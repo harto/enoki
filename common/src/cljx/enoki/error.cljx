@@ -1,5 +1,6 @@
 (ns enoki.error
-  (:require [enoki.logging]))
+  (:require [enoki.core]
+            [enoki.logging]))
 
 ^:clj (defn error
         ([message]
