@@ -33,14 +33,19 @@
   (let [x-offsets {:left -1 :right 1}
         y-offsets {:up -1 :down 1}]
     (reduce (fn [offset pressed-key]
-              (update-in offset [x] + (get x-offsets pressed-key 0))
-              (update-in offset [y] + (get y-offsets pressed-key 0)))
+              (-> offset
+                  (update-in [:x] + (get x-offsets pressed-key 0))
+                  (update-in [:y] + (get y-offsets pressed-key 0))))
             {:x 0 :y 0}
             pressed-keys)))
 
 (defn update [state]
-  (let [{:keys [x y]} (movement (:pressed-keys state))]
-    ))
+  (update-in state [:entities 0 :position]
+             (fn [position {:keys [x y]}]
+               (-> position
+                   (update-in [:x] + x)
+                   (update-in [:y] + y)))
+             (movement (:pressed-keys state))))
 
 ;; ## Draw
 
@@ -69,7 +74,7 @@
 ;; ## Loop
 
 (defn enter-loop [env]
-  ;(event/subscribe! :update (fn [state _] (update state)))
+  (event/subscribe! :update (fn [state _] (update state)))
   (event/subscribe! :render (fn [state _ ctx] (render state ctx)))
   (enoki/start (assoc env :state
                       ;; FIXME: stupid hack to get assets into :state
