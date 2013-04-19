@@ -1,6 +1,7 @@
 ;; Functions for initialising and managing entities.
-;; Entities are plain mappings of component types (keywords) to components (which
-;; are also maps).
+;;
+;; Entities are simple groupings of components, represented as maps of component
+;; types (keywords) to components (also maps).
 
 (ns enoki.entity)
 
