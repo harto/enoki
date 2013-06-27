@@ -8,5 +8,5 @@
   (let [img (js/Image.)]
     (doto img
       (aset "onload" (fn [] (on-load path img)))
-      (aset "onerror" (fn [] (on-error path)))
+      (aset "onerror" (fn [] (on-error path nil)))
       (aset "src" (str *asset-path* path)))))

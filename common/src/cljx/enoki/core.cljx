@@ -3,7 +3,7 @@
 (ns enoki.core)
 
 ;; FIXME: this should be false by default
-(def debug? (atom false))
+(def debug? (atom true))
 
 (defn ^:clj now
   "Return current timestamp in milliseconds."

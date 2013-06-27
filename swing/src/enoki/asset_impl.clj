@@ -3,6 +3,9 @@
   (:import [javax.imageio ImageIO]))
 
 (defn load-image [path on-load on-error]
-  (->> (io/resource path)
-       (ImageIO/read)
-       (on-load path)))
+  (try
+    (->> (io/resource path)
+         (ImageIO/read)
+         (on-load path))
+    (catch Exception e
+      (on-error path e))))

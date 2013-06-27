@@ -24,8 +24,8 @@
                            (apply load-assets* assets remaining-paths load-asset callbacks)
                            (if on-load (on-load assets)))))
         asset-errored (or on-error
-                          (fn [path]
-                            (signal-error (format "Failed to load image %s" path))))]
+                          (fn [path e]
+                            (signal-error (format "Failed to load image `%s`" path) e)))]
     (if before-asset (before-asset path))
     (load-asset path asset-loaded asset-errored)))
 
@@ -44,9 +44,9 @@
                          assets are successfully loaded. `assets` is a map of
                          paths to assets.
 
-     * `:on-error`     - a function `(fn [path])` that is called when an asset
-                         fails to load. If this function is omitted, an
-                         error is signalled if any asset fails to load."
+     * `:on-error`     - a function `(fn [path e])` that is called when an asset
+                         fails to load. If this function is not provided, an
+                         error is signalled for each asset that fails to load."
   [paths load-asset & callbacks]
   (apply load-assets* {} paths load-asset callbacks))
 
