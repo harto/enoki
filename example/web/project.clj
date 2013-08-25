@@ -30,4 +30,6 @@
                                        "../../web/src/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"}}]}
 
+  :aliases {"cljs-repl" ["trampoline" "cljsbuild" "repl-rhino"]}
+
   :main game.web.server)
