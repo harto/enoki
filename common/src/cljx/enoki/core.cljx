@@ -8,7 +8,7 @@
 (defn ^:clj now
   "Return current timestamp in milliseconds."
   []
-  (quot (System/nanoTime) 1e6))
+  (quot (System/nanoTime) 1000000))
 
 (defn ^:cljs now
   "Return current timestamp in milliseconds."

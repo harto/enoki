@@ -20,7 +20,10 @@
   (into {:id (uid)}
         (map (fn [comp] [(:enoki.component/type comp) comp]) components)))
 
-(defn with-component
-  "Find all entities that include a component of a given type."
+(defn has-component? [entity component-type]
+  (contains? entity component-type))
+
+(defn filter-component
+  "Filter `entities` that include a component of a given type."
   [entities component-type]
-  (filter #(contains? % component-type) entities))
+  (filter #(has-component? % component-type) entities))

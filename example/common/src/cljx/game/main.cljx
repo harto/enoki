@@ -7,7 +7,8 @@
                   [enoki.graphics :as gfx]
                   [enoki.logging]
                   [enoki.logging-macros :as log]
-                  [game.component :as comp])
+                  [game.component :as comp]
+                  [game.sprite :as sprite])
         (:use [enoki.core :only [now]]))
 
 ^:cljs (ns game.main
@@ -18,14 +19,27 @@
                    [enoki.event :as event]
                    [enoki.graphics :as gfx]
                    [enoki.logging]
-                   [game.component :as comp])
+                   [game.component :as comp]
+                   [game.sprite :as sprite])
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]])
          (:use-macros [enoki.cljs-macros :only [double]]))
 
+(def slinky-frames 17)
+
+(defn slinky-animation-image [state]
+  (let [frame (mod (quot (now) 50) slinky-frames)]
+    (asset/image state (sprite/path :slinky :east frame))))
+
+(defn slinky-position [state]
+  {:x 10 :y 60})
+
+(defn draw-slinky [ctx state entity]
+  (let [{:keys [x y]} (slinky-position state)]
+    (gfx/draw-image! ctx (slinky-animation-image state) x y)))
+
 (defn initial-state []
-  {:entities [(entity/new (comp/sprite "images/alien.png")
-                          (comp/position 10 60))]})
+  {:entities [(entity/new (comp/renderable draw-slinky))]})
 
 ;; ## Update
 
@@ -40,12 +54,13 @@
             pressed-keys)))
 
 (defn update [state]
-  (update-in state [:entities 0 :position]
-             (fn [position {:keys [x y]}]
-               (-> position
-                   (update-in [:x] + x)
-                   (update-in [:y] + y)))
-             (movement (:pressed-keys state))))
+  state
+  #_(update-in state [:entities 0 :position]
+               (fn [position {:keys [x y]}]
+                 (-> position
+                     (update-in [:x] + x)
+                     (update-in [:y] + y)))
+               (movement (:pressed-keys state))))
 
 ;; ## Draw
 
@@ -55,21 +70,20 @@
 (defn print-pressed-keys! [ctx keys]
   (gfx/draw-text! ctx (format "keys: %s" (str/join ", " keys)) 10 40))
 
-(defn draw-sprite! [ctx state entity]
-  (let [image-id (get-in entity [:sprite :image-id])
-        {:keys [x y]} (get entity :position)]
-    (gfx/draw-image! ctx (asset/image state image-id) x y)))
+(defn draw-entity! [ctx state entity]
+  (let [f (get-in entity [:renderable :render])]
+    (f ctx state entity)))
 
-(defn draw-sprites! [ctx state]
-  (doseq [e (entity/with-component (:entities state) :sprite)]
-    (draw-sprite! ctx state e)))
+(defn draw-entities! [ctx state]
+  (doseq [e (entity/filter-component (:entities state) :renderable)]
+    (draw-entity! ctx state e)))
 
 (defn render [state ctx]
   (-> ctx
       (gfx/clear!)
       (print-fps! (enoki/fps state))
       (print-pressed-keys! (:pressed-keys state))
-      (draw-sprites! state)))
+      (draw-entities! state)))
 
 ;; ## Loop
 
@@ -84,9 +98,8 @@
 (defn start [env]
   (let [start-time (now)]
     (asset/load-images
-     ["images/alien.png"
-      "images/hamburger.gif"
-      "images/stars.jpg"]
+     (for [frame (range slinky-frames)]
+       (sprite/path :slinky :east frame))
      :after-asset (fn [path _]
                     (log/info (format "Loaded %s" path)))
      :on-load (fn [images]
