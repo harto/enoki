@@ -1,33 +1,42 @@
-(ns enoki.keyboard)
+(ns enoki.keyboard
+  (:require [enoki.event :as event])
+  (:use [enoki.util :only [queue]]))
 
-(def event-queue
-  "Stores key events as they occur. The main loop broadcasts all events in this
-   queue each tick, then resets the queue for the next tick. It's up to
-   implementations to capture key events and enter them into this queue."
-  (atom []))
+;; There are two ways for games to handle key input. Firstly, they can react to
+;; the `:key-pressed` and `:key-released` events, which are broadcast with a key
+;; identifier like `:a`, `:b`, `:c`, `:meta`, etc. Secondly, they can interrogate
+;; the `:pressed-keys` property of the game state, which is a set of key
+;; identifiers like `#{:a, :b, :c, :meta}`.
 
-(defn enqueue-event!
-  "Record a key event for later consumption, where both `event-type` and `key`
-   are keywords."
-  [event-type key-name]
-  {:pre [(event-type #{:key-pressed :key-released})]}
-  (swap! event-queue #(conj % [event-type key-name])))
+;; We collect key-pressed and key-released events here for subsequent collation
+;; into the set of pressed keys.
 
-(defn consume-events!
-  "Return enqueued events and reset the queue."
-  []
-  (let [events @event-queue]
-    (reset! event-queue [])
-    events))
+(def ^:private current-tick-key-events
+  (atom (queue)))
 
-(defn currently-pressed-keys
-  "Given a key event queue (as returned by `consume-events!`) and the set of
-   keys being pressed at the end of the last tick, produce the new set of keys
-   currently being pressed."
-  [pressed-keys event-queue]
+(defn ^:private handle-key-event [state event-type key-name]
+  (swap! current-tick-key-events conj [event-type key-name])
+  state)
+
+(defn update-pressed-keys
+  "Determine the set of keys \"currently\" being pressed, i.e. those that
+   generated a `:key-pressed` event without a corresponding `:key-released`
+   event, or those still pressed from the previous tick."
+  [previously-pressed-keys key-events]
   (reduce (fn [pressed [event-type key-name]]
             (condp = event-type
               :key-pressed (conj pressed key-name)
               :key-released (disj pressed key-name)))
-          (or pressed-keys #{})
-          event-queue))
+          (or previously-pressed-keys #{})
+          key-events))
+
+(defn ^:private update-currently-pressed-keys
+  [state event-type]
+  (let [key-events @current-tick-key-events]
+    (reset! current-tick-key-events (queue))
+    (update-in state [:pressed-keys] update-pressed-keys key-events)))
+
+(defn init! []
+  (event/subscribe! :key-pressed handle-key-event)
+  (event/subscribe! :key-released handle-key-event)
+  (event/subscribe! :update update-currently-pressed-keys))

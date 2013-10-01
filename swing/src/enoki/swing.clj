@@ -1,8 +1,8 @@
 (ns enoki.swing
   (:require [clojure.string :as str]
             [seesaw.core :as seesaw]
+            [enoki.event :as event]
             [enoki.graphics.java2d :as gfx]
-            [enoki.keyboard :as kbd]
             [enoki.logging]
             [enoki.logging-macros :as log])
   (:import [java.awt.event KeyEvent]))
@@ -58,7 +58,7 @@
 
 (defn- handle-key-event [event-type e]
   (if-let [key-name (get key-names (.getKeyCode e))]
-    (kbd/enqueue-event! event-type key-name)
+    (event/enqueue! event-type key-name)
     (log/debug (format "unprocessable key event (%s): %s" event-type e))))
 
 (defn create-frame []
