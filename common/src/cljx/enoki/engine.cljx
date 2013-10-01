@@ -17,25 +17,15 @@
          (:require-macros [enoki.logging-macros :as log])
          (:use [enoki.core :only [now]]))
 
-(defn fire-key-events [state events]
-  (reduce (fn [state [event-type key]]
-            (e/broadcast state event-type key))
-          state
-          events))
-
-(defn handle-key-input [state key-events]
-  (-> state
-      (update-in [:pressed-keys] kbd/currently-pressed-keys key-events)
-      (fire-key-events key-events)))
-
 (defn update
   "Trigger an update of the game state. All handler functions registered for
    the `:update` event are called with the current game state, and each must
    return an updated state."
   [state]
-  (-> state
-      (handle-key-input (kbd/consume-events!))
-      (e/broadcast :update)))
+  (let [pending-events (e/drain!)]
+    (-> state
+        (e/broadcast-all pending-events)
+        (e/broadcast :update))))
 
 (defn record-tick-duration
   [{:keys [last-sample-time last-sec-ticks curr-sec-ticks] :as state} tick]
@@ -97,5 +87,6 @@
    loop is exited, depending on the implementation of loop-fn."
   [env]
   (g/init-display! (:display env))
+  (kbd/init!)
   (log/info "Entering game loop")
   (loop-forever (assoc-in env [:state :ticks] 0)))
