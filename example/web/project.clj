@@ -5,7 +5,7 @@
                  [compojure "1.1.3"]
                  [enlive "1.0.0"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.1"]
+  :plugins [[com.keminglabs/cljx "0.3.0"]
             [lein-cljsbuild "0.3.0"]]
 
   :source-paths ["src/clj"]
@@ -18,9 +18,7 @@
                                   ;; are split into separate repos
                                   "../../common/src/cljx"]
                    :output-path "generated/src"
-                   :extension "cljs"
-                   :include-meta true
-                   :rules cljx.rules/cljs-rules}]}
+                   :rules :cljs}]}
 
   :cljsbuild {:builds [{:source-paths ["src/cljs"
                                        "generated/src"

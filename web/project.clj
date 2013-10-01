@@ -2,7 +2,7 @@
 
   :dependencies [[org.clojure/clojure "1.5.0"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.1"]
+  :plugins [[com.keminglabs/cljx "0.3.0"]
             [lein-cljsbuild "0.3.0"]]
 
   :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.2"]]}}
@@ -15,15 +15,11 @@
   ;; FIXME: update once implementations are separated from core
   :cljx {:builds [{:source-paths ["../common/src/cljx"]
                    :output-path "generated/src"
-                   :extension "cljs"
-                   :include-meta true
-                   :rules cljx.rules/cljs-rules}
+                   :rules :cljs}
 
                   {:source-paths ["../common/test/cljx"]
                    :output-path "generated/test"
-                   :extension "cljs"
-                   :include-meta true
-                   :rules cljx.rules/cljs-rules}]}
+                   :rules :cljs}]}
 
   :cljsbuild {:builds [{:source-paths ["src/cljs"
                                        "generated/src"

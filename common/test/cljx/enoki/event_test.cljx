@@ -1,13 +1,15 @@
-^:clj (ns enoki.event-test
-        (:require [enoki.event :as e])
-        (:use [clojure.test :only [deftest testing is]]
-              [enoki.util :only [queue]]))
+#+clj
+(ns enoki.event-test
+  (:require [enoki.event :as e])
+  (:use [clojure.test :only [deftest testing is]]
+        [enoki.util :only [queue]]))
 
-^:cljs (ns enoki.event-test
-         (:require [cemerick.cljs.test :as _]
-                   [enoki.event :as e])
-         (:use [enoki.util :only [queue]])
-         (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
+#+cljs
+(ns enoki.event-test
+  (:require [cemerick.cljs.test :as _]
+            [enoki.event :as e])
+  (:use [enoki.util :only [queue]])
+  (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
 
 (deftest test-subscribe!
   (let [handler (constantly :updated-state)]
