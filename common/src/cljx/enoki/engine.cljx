@@ -1,21 +1,23 @@
 ;; Core engine functionality.
 
-^:clj (ns enoki.engine
-        (:require [enoki.event :as e]
-                  [enoki.graphics :as g]
-                  [enoki.keyboard :as kbd]
-                  [enoki.logging]
-                  [enoki.logging-macros :as log])
-        (:use [enoki.core :only [now]]))
+#+clj
+(ns enoki.engine
+  (:require [enoki.event :as e]
+            [enoki.graphics :as g]
+            [enoki.keyboard :as kbd]
+            [enoki.logging]
+            [enoki.logging-macros :as log])
+  (:use [enoki.core :only [now]]))
 
-^:cljs (ns enoki.engine
-         (:require [goog.Timer :as timer]
-                   [enoki.event :as e]
-                   [enoki.graphics :as g]
-                   [enoki.keyboard :as kbd]
-                   [enoki.logging])
-         (:require-macros [enoki.logging-macros :as log])
-         (:use [enoki.core :only [now]]))
+#+cljs
+(ns enoki.engine
+  (:require [goog.Timer :as timer]
+            [enoki.event :as e]
+            [enoki.graphics :as g]
+            [enoki.keyboard :as kbd]
+            [enoki.logging])
+  (:require-macros [enoki.logging-macros :as log])
+  (:use [enoki.core :only [now]]))
 
 (defn update
   "Trigger an update of the game state. All handler functions registered for
@@ -65,9 +67,10 @@
 ;; put the running thread to sleep momentarily. The JavaScript equivalent is to
 ;; set a timeout that calls the next tick a moment into the future.
 
-(defn ^:clj loop-forever
-  "A naïve game loop implementation that repeatedly calls `tick', yielding
-   for 1ms between calls."
+#+clj
+(defn loop-forever
+  "A naïve game loop implementation that repeatedly calls `tick', yielding for
+   1ms between calls."
   [env]
   ;; We start a new thread to aid interactive development. This returns control
   ;; to the REPL immediately.
@@ -77,9 +80,10 @@
       (Thread.)
       (.start)))
 
-(defn ^:cljs loop-forever [env]
-  "A naïve game loop implementation that repeatedly calls `tick', yielding
-   for 1 ms between calls."
+#+cljs
+(defn loop-forever [env]
+  "A naïve game loop implementation that repeatedly calls `tick', yielding for
+   1ms between calls."
   (timer/callOnce #(loop-forever (tick env)) 1))
 
 (defn start

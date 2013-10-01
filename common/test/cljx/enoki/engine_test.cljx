@@ -1,15 +1,17 @@
-^:clj (ns enoki.engine-test
-        (:require [enoki.engine :as engine]
-                  [enoki.event :as e]
-                  [enoki.graphics :as g])
-        (:use [clojure.test :only [deftest testing is]]))
+#+clj
+(ns enoki.engine-test
+  (:require [enoki.engine :as engine]
+            [enoki.event :as e]
+            [enoki.graphics :as g])
+  (:use [clojure.test :only [deftest testing is]]))
 
-^:cljs (ns enoki.engine-test
-         (:require [cemerick.cljs.test :as test]
-                   [enoki.engine :as engine]
-                   [enoki.event :as e]
-                   [enoki.graphics :as g])
-         (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
+#+cljs
+(ns enoki.engine-test
+  (:require [cemerick.cljs.test :as test]
+            [enoki.engine :as engine]
+            [enoki.event :as e]
+            [enoki.graphics :as g])
+  (:use-macros [cemerick.cljs.test :only [deftest testing is]]))
 
 (defrecord DummyDisplay []
   g/Display

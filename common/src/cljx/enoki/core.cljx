@@ -5,12 +5,14 @@
 ;; FIXME: this should be false by default
 (def debug? (atom true))
 
-(defn ^:clj now
+#+clj
+(defn now
   "Return current timestamp in milliseconds."
   []
   (quot (System/nanoTime) 1000000))
 
-(defn ^:cljs now
+#+cljs
+(defn now
   "Return current timestamp in milliseconds."
   []
   (.getTime (new js/Date)))

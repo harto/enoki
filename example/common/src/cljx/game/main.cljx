@@ -1,29 +1,31 @@
-^:clj (ns game.main
-        (:require [clojure.string :as str]
-                  [enoki.asset :as asset]
-                  [enoki.engine :as enoki]
-                  [enoki.entity :as entity]
-                  [enoki.event :as event]
-                  [enoki.graphics :as gfx]
-                  [enoki.logging]
-                  [enoki.logging-macros :as log]
-                  [game.component :as comp]
-                  [game.sprite :as sprite])
-        (:use [enoki.core :only [now]]))
+#+clj
+(ns game.main
+  (:require [clojure.string :as str]
+            [enoki.asset :as asset]
+            [enoki.engine :as enoki]
+            [enoki.entity :as entity]
+            [enoki.event :as event]
+            [enoki.graphics :as gfx]
+            [enoki.logging]
+            [enoki.logging-macros :as log]
+            [game.component :as comp]
+            [game.sprite :as sprite])
+  (:use [enoki.core :only [now]]))
 
-^:cljs (ns game.main
-         (:require [clojure.string :as str]
-                   [enoki.asset :as asset]
-                   [enoki.engine :as enoki]
-                   [enoki.entity :as entity]
-                   [enoki.event :as event]
-                   [enoki.graphics :as gfx]
-                   [enoki.logging]
-                   [game.component :as comp]
-                   [game.sprite :as sprite])
-         (:require-macros [enoki.logging-macros :as log])
-         (:use [enoki.core :only [now]])
-         (:use-macros [enoki.cljs-macros :only [double]]))
+#+cljs
+(ns game.main
+  (:require [clojure.string :as str]
+            [enoki.asset :as asset]
+            [enoki.engine :as enoki]
+            [enoki.entity :as entity]
+            [enoki.event :as event]
+            [enoki.graphics :as gfx]
+            [enoki.logging]
+            [game.component :as comp]
+            [game.sprite :as sprite])
+  (:require-macros [enoki.logging-macros :as log])
+  (:use [enoki.core :only [now]])
+  (:use-macros [enoki.cljs-macros :only [double]]))
 
 (def slinky-frames 17)
 

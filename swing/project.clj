@@ -4,9 +4,9 @@
 
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [org.clojure/tools.logging "0.2.4"]
-                 [seesaw "1.4.2"]]
+                 [seesaw "1.4.3"]]
 
-  :plugins [[com.keminglabs/cljx "0.2.1"]]
+  :plugins [[com.keminglabs/cljx "0.3.0"]]
 
   :source-paths ["src"
                  "generated/src"
@@ -17,12 +17,10 @@
 
   :cljx {:builds [{:source-paths ["../common/src/cljx"]
                    :output-path "generated/src"
-                   :include-meta true
-                   :rules cljx.rules/clj-rules}
+                   :rules :clj}
 
                   {:source-paths ["../common/test/cljx"]
                    :output-path "generated/test"
-                   :include-meta true
-                   :rules cljx.rules/clj-rules}]}
+                   :rules :clj}]}
 
   :aliases {"citest" ["do" "cljx," "test"]})
