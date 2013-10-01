@@ -3,7 +3,6 @@
             [clojure.string :as str]
             [enoki.event :as event]
             [enoki.graphics.canvas :as gfx]
-            [enoki.keyboard :as kbd]
             [enoki.logging :as logging])
   (:require-macros [enoki.logging-macros :as log]))
 
@@ -73,7 +72,7 @@
 (defn handle-key-event [event-type e]
   (if-let [key-name (get key-names (.-keyCode e))]
     (do
-      (kbd/enqueue-event! event-type key-name)
+      (event/enqueue! event-type key-name)
       (.preventDefault e))
     (log/info (format "unprocessable key event (%s): %s" event-type (.-keyCode e)))))
 
