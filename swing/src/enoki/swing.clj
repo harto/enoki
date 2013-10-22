@@ -4,8 +4,7 @@
             [enoki.event :as event]
             [enoki.graphics.java2d :as gfx]
             [enoki.logging]
-            [enoki.logging-macros :as log])
-  (:import [java.awt.event KeyEvent]))
+            [enoki.logging-macros :as log]))
 
 (defn- map-char-range [from-char to-char]
   (into {} (for [code (range (int from-char)
