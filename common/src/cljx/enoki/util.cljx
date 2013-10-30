@@ -2,10 +2,9 @@
 
 (ns enoki.util)
 
-#+clj
-(defn queue [& args]
-  (into clojure.lang.PersistentQueue/EMPTY args))
-
-#+cljs
-(defn queue [& args]
-  (into cljs.core.PersistentQueue/EMPTY args))
+(defn queue
+  ([]
+     #+clj clojure.lang.PersistentQueue/EMPTY
+     #+cljs cljs.core.PersistentQueue/EMPTY)
+  ([& args]
+     (into (queue) args)))
