@@ -33,22 +33,22 @@
 
 (defn load-assets
   "Attempts to load a seq of asset paths using a given asset-loading function.
-   `callbacks` is a set of key-value pairs that defines any or all of the
-   following:
+  `callbacks` is a set of key-value pairs that defines any or all of the
+  following:
 
-     * `:before-asset` - a function `(fn [path])` that is called immediately
-                         prior to loading an asset.
+  * `:before-asset` - a function `(fn [path])` that is called immediately prior
+                      to loading an asset.
 
-     * `:after-asset`  - a function `(fn [path asset])` that is called
-                         immediately after an asset is successfully loaded.
+  * `:after-asset`  - a function `(fn [path asset])` that is called immediately
+                      after an asset is successfully loaded.
 
-     * `:on-load`      - a function `(fn [assets])` that is called when all
-                         assets are successfully loaded. `assets` is a map of
-                         paths to assets.
+  * `:on-load`      - a function `(fn [assets])` that is called when all assets
+                      are successfully loaded. `assets` is a map of paths to
+                      assets.
 
-     * `:on-error`     - a function `(fn [path e])` that is called when an asset
-                         fails to load. If this function is not provided, an
-                         error is signalled for each asset that fails to load."
+  * `:on-error`     - a function `(fn [path e])` that is called when an asset
+                      fails to load. If this function is not provided, an error
+                      is signalled for each asset that fails to load."
   [paths load-asset & callbacks]
   (apply load-assets* {} paths load-asset callbacks))
 
