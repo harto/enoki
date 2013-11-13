@@ -3,7 +3,8 @@
   :dependencies [[org.clojure/clojure "1.5.0"]]
 
   :plugins [[com.keminglabs/cljx "0.3.0"]
-            [lein-cljsbuild "0.3.0"]]
+            [lein-cljsbuild "0.3.0"]
+            [lein-marginalia "0.7.1"]]
 
   :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.2"]]}}
 
@@ -28,4 +29,5 @@
                         :compiler {:output-to "target/cljs/test-suite.js"}}]
               :test-commands {"unit-tests" ["test/test-runner.js" "target/cljs/test-suite.js"]}}
 
-  :aliases {"citest" ["do" "cljx," "cljsbuild" "once," "cljsbuild" "test"]})
+  :aliases {"citest" ["do" "cljx," "cljsbuild" "once," "cljsbuild" "test"]
+            "docs" ["do" "cljx," "marg" "src/cljs" "generated/src" "../common/src/clj"]})

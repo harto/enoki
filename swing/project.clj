@@ -6,7 +6,8 @@
                  [org.clojure/tools.logging "0.2.4"]
                  [seesaw "1.4.3"]]
 
-  :plugins [[com.keminglabs/cljx "0.3.0"]]
+  :plugins [[com.keminglabs/cljx "0.3.0"]
+            [lein-marginalia "0.7.1"]]
 
   :source-paths ["src"
                  "generated/src"
@@ -23,4 +24,5 @@
                    :output-path "generated/test"
                    :rules :clj}]}
 
-  :aliases {"citest" ["do" "cljx," "test"]})
+  :aliases {"citest" ["do" "cljx," "test"]
+            "docs" ["do" "cljx," "marg" "src" "generated/src" "../common/src/clj"]})
