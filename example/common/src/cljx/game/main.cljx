@@ -82,7 +82,7 @@
 
 (defn render [state ctx]
   (-> ctx
-      (gfx/clear!)
+      (gfx/clear! "#000")
       (print-fps! (enoki/fps state))
       (print-pressed-keys! (:pressed-keys state))
       (draw-entities! state)))

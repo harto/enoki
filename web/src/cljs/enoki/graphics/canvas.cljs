@@ -13,6 +13,10 @@
     (.clearRect ctx 0 0 (display-width display) (display-height display))
     this)
 
+  (clear! [this colour]
+    (with-properties ctx {:background colour}
+      (clear! this)))
+
   (draw-text! [this s x y]
     (.fillText ctx s x y)
     this)

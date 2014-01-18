@@ -10,16 +10,43 @@
             [enoki.logging]
             [enoki.logging-macros :as log])
   (:use [enoki.error-macros :only [signal-error]]
-        [enoki.graphics])
+        [enoki.graphics]
+        [enoki.graphics-macros :only [with-properties]]
+        [enoki.java.util :only [camelise]])
   (:import [java.awt Canvas Color Dimension Image]))
 
-(defrecord Graphics2DContext [display g]
+(defmacro property-setter [ctx k]
+  `(fn [val#]
+     (. ~ctx ~(symbol (str "set" (camelise k))) val#)))
+
+(defn set-property!* [ctx k v]
+  (let [setter (property-setter ctx k)]
+    (setter v)))
+
+(defrecord Graphics2DContext [display g prior-context]
 
   Context
+
+  (save! [this]
+    (swap! stack conj g)
+    (.create ))
+
+  (restore! [this]
+    (let [previous (first stack)]
+      (swap! stack next)
+      (.dispose this)
+      previous))
+
+  (set-property! [this k v]
+    (set-property!* this k v))
 
   (clear! [this]
     (.clearRect g 0 0 (display-width display) (display-height display))
     this)
+
+  (clear! [this colour]
+    (with-properties this {:background colour}
+      (clear! this)))
 
   (draw-text! [this s x y]
     (.drawString g (str s) x y)
@@ -50,7 +77,7 @@
     (let [bs (.getBufferStrategy canvas)
           g (.getDrawGraphics bs)]
       (try
-        (f (->Graphics2DContext this g))
+        (f (->Graphics2DContext this g (atom nil)))
         (catch Exception e
           (signal-error "Rendering error" e))
         (finally
