@@ -81,6 +81,56 @@
     (.addEventListener "keydown" (partial handle-key-event :key-pressed))
     (.addEventListener "keyup" (partial handle-key-event :key-released))))
 
+(defn attach-visibility-change-listener!
+  "Attach visibility-change listener per https://developer.mozilla.org/en-US/docs/Web/Guide/User_experience/Using_the_Page_Visibility_API
+   Call a function like `(fn [visible?])' when visibility changes"
+  [document f]
+  (let [[property-name event-name] (cond
+                                    (not (undefined? (.-hidden document)))
+                                    ["hidden" "visibilitychanged"]
+                                    (not (undefined? (.-mozHidden document)))
+                                    ["mozHidden" "mozvisibilitychange"]
+                                    (not (undefined? (.-msHidden document)))
+                                    ["msHidden" "msvisibilitychange"]
+                                    (not (undefined? (.-webkitHidden document)))
+                                    ["webkitHidden" "webkitvisibilitychange"])]
+    (log/debug (format "property-name=%s; event-name=%s" property-name event-name))
+    (.addEventListener document
+                       event-name
+                       (fn [] (f (not (aget document property-name)))))))
+
+;; (def browser-event-queue
+;;   "Capture out-of-band events for re-broadcast at the appropriate time."
+;;   (atom nil))
+
+;; (defn proxy-event [& type-and-args]
+;;   "Capture some event for re-broadcast at a predictable time (during the main
+;;    loop) when we have the game state available to us."
+;;   (swap! browser-event-queue conj type-and-args))
+
+;; (defn broadcast-browser-events [state]
+;;   (let [events @browser-event-queue]
+;;     (reset! browser-event-queue nil)
+;;     (reduce )))
+
+(def browser-tab-focus-changed?
+  (atom false))
+
+(def browser-tab-focused?
+  (atom true))
+
+(defn handle-focus-change [focused?]
+  ;; Capture focus-change event for rebroadcast during event loop
+  (log/info (format "visible?=%s" visible?))
+  (reset! browser-tab-focused? focused?))
+
+(defn capture-focus-events! [document]
+  (log/info "Attaching window events")
+  (attach-visibility-change-listener! (.-document js/window)
+                                      handle-visibility-change)
+
+  )
+
 (defn init! []
   (repl/connect "http://localhost:9000/repl")
   (logging/init!)
@@ -93,4 +143,5 @@
   "Initialise and return a web-based environment."
   [canvas-element]
   (capture-key-events! js/window)
+  (capture-focus-events! (.-document js/window))
   {:display (gfx/->CanvasDisplay canvas-element)})
